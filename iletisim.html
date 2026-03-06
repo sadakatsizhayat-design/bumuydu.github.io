@@ -436,7 +436,7 @@
 
     <div class="contact-item">
       <span class="contact-item-label">E-Posta</span>
-      <span class="contact-item-value"><a href="mailto:iletisimbumuydu@gmail.com">iletisimbumuydu@gmail.com</a></span>
+      <span class="contact-item-value"><a href="/cdn-cgi/l/email-protection#dfb6b3baabb6acb6b2bdaab2aaa6bbaa9fb8b2beb6b3f1bcb0b2"><span class="__cf_email__" data-cfemail="056c6960716c766c68677068707c6170456268646c692b666a68">[email&#160;protected]</span></a></span>
     </div>
 
     <div class="contact-item">
@@ -452,36 +452,41 @@
 
   <!-- SAĞ FORM -->
   <div class="contact-form-wrap">
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="0f5527e4-3a28-430f-848c-b581caf66406">
+    <input type="hidden" name="subject" value="Bu Muydu — Yeni Iletisim Mesaji">
+
     <div class="form-row">
       <div class="form-group">
         <label class="form-label" for="isim">İsim</label>
-        <input class="form-input" type="text" id="isim" placeholder="Adınız...">
+        <input class="form-input" type="text" name="name" id="isim" placeholder="Adınız..." required>
       </div>
       <div class="form-group">
         <label class="form-label" for="email">E-Posta</label>
-        <input class="form-input" type="email" id="email" placeholder="mail@ornek.com">
+        <input class="form-input" type="email" name="email" id="email" placeholder="mail@ornek.com" required>
       </div>
     </div>
 
     <div class="form-group">
       <label class="form-label" for="konu">Konu</label>
-      <select class="form-select" id="konu">
+      <select class="form-select" name="subject_type" id="konu">
         <option value="" disabled selected>Konu seçin...</option>
-        <option value="isbirligi">İş Birliği</option>
-        <option value="oneri">İçerik Önerisi</option>
-        <option value="destek">Destek</option>
-        <option value="diger">Diğer</option>
+        <option value="Is Birligi">İş Birliği</option>
+        <option value="Icerik Onerisi">İçerik Önerisi</option>
+        <option value="Destek">Destek</option>
+        <option value="Diger">Diğer</option>
       </select>
     </div>
 
     <div class="form-group">
       <label class="form-label" for="mesaj">Mesaj</label>
-      <textarea class="form-textarea" id="mesaj" placeholder="Mesajınızı buraya yazın..."></textarea>
+      <textarea class="form-textarea" name="message" id="mesaj" placeholder="Mesajınızı buraya yazın..." required></textarea>
     </div>
 
-    <button class="submit-btn" onclick="handleSubmit()">
+    <button type="submit" class="submit-btn">
       <span>Gönder →</span>
     </button>
+  </form>
 
     <div class="success-msg" id="successMsg">
       <p>Mesajınız alındı. En kısa sürede dönüş yapılacak. ✦</p>
@@ -498,7 +503,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -543,12 +548,4 @@
 
     // Mailto ile gönder
     const konu = document.getElementById('konu').value || 'İletişim';
-    const mailtoLink = `mailto:iletisimbumuydu@gmail.com?subject=${encodeURIComponent(konu + ' - ' + isim)}&body=${encodeURIComponent('İsim: ' + isim + '\nE-Posta: ' + email + '\n\nMesaj:\n' + mesaj)}`;
-    window.location.href = mailtoLink;
-
-    document.getElementById('successMsg').classList.add('show');
-  }
-</script>
-
-</body>
-</html>
+    const mailtoLink = `mailto:iletisimbumuydu@gmail.com?subject=${encodeURIComponent
