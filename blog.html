@@ -27,7 +27,6 @@
     overflow-x: hidden;
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -57,7 +56,6 @@
   }
   .nav-back:hover { color: var(--green); }
 
-  /* HERO */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -69,8 +67,7 @@
 
   .radar-wrap {
     position: absolute;
-    width: 700px;
-    height: 700px;
+    width: 700px; height: 700px;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0.12;
@@ -84,24 +81,12 @@
     transform: translate(-50%, -50%);
   }
 
-  .radar-line-h {
-    position: absolute;
-    width: 100%; height: 1px;
-    background: var(--green);
-    top: 50%; left: 0;
-  }
-
-  .radar-line-v {
-    position: absolute;
-    height: 100%; width: 1px;
-    background: var(--green);
-    left: 50%; top: 0;
-  }
+  .radar-line-h { position: absolute; width: 100%; height: 1px; background: var(--green); top: 50%; left: 0; }
+  .radar-line-v { position: absolute; height: 100%; width: 1px; background: var(--green); left: 50%; top: 0; }
 
   .radar-sweep {
     position: absolute;
-    width: 50%;
-    height: 2px;
+    width: 50%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--green));
     top: 50%; left: 50%;
     transform-origin: left center;
@@ -126,11 +111,7 @@
     50% { opacity: 0.2; }
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-  }
+  .hero-content { position: relative; z-index: 2; text-align: center; }
 
   .radar-title {
     font-family: 'Playfair Display', serif;
@@ -161,8 +142,7 @@
 
   .scroll-hint {
     position: absolute;
-    bottom: 3rem;
-    left: 50%;
+    bottom: 3rem; left: 50%;
     transform: translateX(-50%);
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
@@ -177,8 +157,7 @@
   }
 
   .scroll-line {
-    width: 1px;
-    height: 40px;
+    width: 1px; height: 40px;
     background: var(--green);
     animation: scrollDown 2s ease-in-out infinite;
   }
@@ -190,7 +169,6 @@
     100% { transform: scaleY(0); transform-origin: bottom; }
   }
 
-  /* SECTIONS */
   .section-label {
     font-family: 'DM Mono', monospace;
     font-size: 0.55rem;
@@ -205,12 +183,10 @@
   .section-label::before {
     content: '';
     display: block;
-    width: 20px;
-    height: 1px;
+    width: 20px; height: 1px;
     background: var(--green);
   }
 
-  /* GRID */
   .content-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -218,11 +194,7 @@
     background: var(--border);
   }
 
-  .card {
-    background: var(--bg);
-    padding: 3rem;
-  }
-
+  .card { background: var(--bg); padding: 3rem; }
   .card.dark { background: #070e06; }
   .card.wide { grid-column: span 2; }
   .card.full { grid-column: span 3; }
@@ -267,17 +239,23 @@
 
   .item-text {
     font-size: 0.95rem;
-    color: var(--muted);
-    font-style: italic;
+    color: var(--cream);
     line-height: 1.6;
   }
 
-  .item-text.filled {
-    color: var(--cream);
-    font-style: normal;
+  .item-text.muted {
+    color: var(--muted);
+    font-style: italic;
   }
 
-  /* Wishlist kartları */
+  /* Spotify embed */
+  .spotify-wrap {
+    margin-top: 0.8rem;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Wishlist */
   .wish-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -323,12 +301,7 @@
     overflow: hidden;
   }
 
-  .portrait-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  .portrait-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .portrait-placeholder {
     font-family: 'DM Mono', monospace;
@@ -349,7 +322,6 @@
     padding-left: 1rem;
   }
 
-  /* FOOTER */
   footer {
     background: #050a04;
     padding: 2.5rem 4rem;
@@ -360,12 +332,7 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-  footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    opacity: 0.5;
-  }
+  footer p { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); opacity: 0.5; }
   .footer-links { display: flex; gap: 2rem; }
   .footer-links a {
     font-family: 'DM Mono', monospace;
@@ -394,7 +361,6 @@
   <a href="index.html" class="nav-back">← Ana Sayfa</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="radar-wrap">
     <div class="radar-circle" style="width:100px;height:100px;"></div>
@@ -425,10 +391,9 @@
   </div>
 </div>
 
-<!-- CONTENT -->
 <div class="content-grid">
 
-  <!-- 01 TAKINTIlar -->
+  <!-- 01 TAKINTILAR -->
   <div class="card wide">
     <div class="section-label">01</div>
     <div class="card-title">Neye <em>Takıntılıyım?</em></div>
@@ -436,8 +401,8 @@
     <div class="item">
       <div class="item-dot"></div>
       <div class="item-inner">
-        <div class="item-label">Bu Hafta Okudum / Düşündüm</div>
-        <div class="item-text">Buraya makale, felsefi alıntı veya üzerinde düşündüğünüz kavramı yazın...</div>
+        <div class="item-label">Bu Hafta Okuyorum</div>
+        <div class="item-text">"Bekle Beni" – Zülfü Livaneli</div>
       </div>
     </div>
 
@@ -445,7 +410,10 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Döngüye Aldığım Şarkı</div>
-        <div class="item-text">Şarkı adı buraya...</div>
+        <div class="item-text">Duran Duran — Save a Prayer (2009 Remaster)</div>
+        <div class="spotify-wrap">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ff8lsrJ2kuZuofMw81EQo?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
       </div>
     </div>
 
@@ -453,7 +421,7 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Yeni Keşif</div>
-        <div class="item-text">Bir ürün, yemek tarifi, makyaj malzemesi veya küçük bir şey...</div>
+        <div class="item-text"><strong style="color:var(--green);">Apofeni</strong> — Anlamsız şeylerde anlam bulma sanatı. Rastlantılarda bağlantı görmek, örüntü aramak. Belki de "Bu Muydu?" sorusunun ta kendisi.</div>
       </div>
     </div>
 
@@ -461,7 +429,7 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Masa Başında Vazgeçemediğim</div>
-        <div class="item-text">Atıştırmalık, içecek, alışkanlık...</div>
+        <div class="item-text">Çay ☕</div>
       </div>
     </div>
   </div>
@@ -475,7 +443,7 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Mental Sağlığım İçin İzlediklerim</div>
-        <div class="item-text">Rahatlatıcı içerikler buraya...</div>
+        <div class="item-text muted">Rahatlatıcı içerikler buraya...</div>
       </div>
     </div>
 
@@ -483,7 +451,7 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">İnternetin Karanlık Çukurlarından</div>
-        <div class="item-text">İlginç YouTube belgesi veya Reddit başlığı...</div>
+        <div class="item-text muted">İlginç YouTube belgesi veya Reddit başlığı...</div>
       </div>
     </div>
 
@@ -491,7 +459,7 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Şu An Çantamda Ne Var?</div>
-        <div class="item-text">Dijital veya fiziksel çanta içeriği...</div>
+        <div class="item-text muted">Dijital veya fiziksel çanta içeriği...</div>
       </div>
     </div>
   </div>
@@ -503,24 +471,24 @@
     <div class="wish-grid">
       <div class="wish-item">
         <div class="item-label">Para Biriktiriyorum</div>
-        <div class="item-text">Almak istediğiniz şey buraya...</div>
+        <div class="item-text muted">Almak istediğiniz şey buraya...</div>
       </div>
       <div class="wish-item">
         <div class="item-label">Keşke Ben Tasarlasaydım</div>
-        <div class="item-text">Hayranlık duyduğunuz ürün buraya...</div>
+        <div class="item-text muted">Hayranlık duyduğunuz ürün buraya...</div>
       </div>
       <div class="wish-item">
         <div class="item-label">Etik Üretim / Sürdürülebilir</div>
-        <div class="item-text">Beğendiğiniz marka veya öneri buraya...</div>
+        <div class="item-text muted">Beğendiğiniz marka veya öneri buraya...</div>
       </div>
       <div class="wish-item">
         <div class="item-label">Bu Hafta Tavsiyem</div>
-        <div class="item-text">Her şey olabilir...</div>
+        <div class="item-text muted">Her şey olabilir...</div>
       </div>
     </div>
   </div>
 
-  <!-- 04 MİNİ BLOG -->
+  <!-- 04 KİŞİSEL NOTLAR -->
   <div class="card dark wide">
     <div class="section-label">04</div>
     <div class="card-title">Kişisel <em>Notlar</em></div>
@@ -537,7 +505,6 @@
     <div class="card-title"><em>Otoportre</em></div>
 
     <div class="portrait-box">
-      <!-- Fotoğraf eklemek için: <img src="FOTOGRAF_LINKI" alt="Otoportre"> -->
       <div class="portrait-placeholder">Fotoğraf buraya</div>
     </div>
     <p class="portrait-caption">O günkü hissi anlatan tek cümle buraya...</p>
@@ -550,7 +517,7 @@
   <div class="footer-links">
     <a href="index.html">Ana Sayfa</a>
     <a href="https://www.youtube.com/@bumuydu" target="_blank">YouTube</a>
-    <a href="mailto:bumuydu@gmail.com">İletişim</a>
+    <a href="iletisim.html">İletişim</a>
   </div>
 </footer>
 
