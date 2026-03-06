@@ -443,7 +443,8 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Mental Sağlığım İçin İzlediklerim</div>
-        <div class="item-text muted">Rahatlatıcı içerikler buraya...</div>
+        <img src="https://upload.wikimedia.org/wikipedia/tr/3/32/HowllDVD.jpg" style="width:70px;height:70px;object-fit:cover;border:1px solid rgba(74,154,95,0.3);margin:0.5rem 0;display:block;">
+        <div class="item-text">Hayao Miyazaki — Howl'un Yürüyen Şatosu</div>
       </div>
     </div>
 
@@ -451,7 +452,8 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">İnternetin Karanlık Çukurlarından</div>
-        <div class="item-text muted">İlginç YouTube belgesi veya Reddit başlığı...</div>
+        <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/The_Dinosaurs_%28miniseries%29.jpg" style="width:70px;height:70px;object-fit:cover;border:1px solid rgba(74,154,95,0.3);margin:0.5rem 0;display:block;">
+        <div class="item-text">Netflix 2026 — Dinozorlar Belgeseli</div>
       </div>
     </div>
 
@@ -459,11 +461,12 @@
       <div class="item-dot"></div>
       <div class="item-inner">
         <div class="item-label">Şu An Çantamda Ne Var?</div>
-        <div class="item-text muted">Dijital veya fiziksel çanta içeriği...</div>
+        <div id="pixel-flower" style="display:grid;grid-template-columns:repeat(12,5px);grid-template-rows:repeat(12,5px);margin:0.5rem 0;image-rendering:pixelated;"></div>
+        <div class="item-text">Çiçek tohumları 🌱 İlkbaharda bahçeme kuracağım çiçek bahçesi için gezdikçe topluyorum.</div>
       </div>
     </div>
-  </div>
 
+  </div>
   <!-- 03 WİSHLİST -->
   <div class="card full">
     <div class="section-label">03</div>
@@ -521,5 +524,31 @@
   </div>
 </footer>
 
+  <script>
+(function() {
+  const el = document.getElementById('pixel-flower');
+  if (!el) return;
+  const fc = {0:'transparent',1:'#22aa44',2:'#ff6699',3:'#ffdd00',4:'#ff99cc',5:'#115522',6:'#ff3377'};
+  const grid = [
+    [0,0,0,2,6,6,2,0,0,0,0,0],
+    [0,0,2,4,2,2,4,2,0,0,0,0],
+    [0,2,4,2,3,3,2,4,2,0,0,0],
+    [0,6,2,3,3,3,3,2,6,0,0,0],
+    [0,6,2,3,3,3,3,2,6,0,0,0],
+    [0,2,4,2,3,3,2,4,2,0,0,0],
+    [0,0,2,4,2,2,4,2,0,0,0,0],
+    [0,0,0,2,6,6,2,0,0,0,0,0],
+    [0,0,0,0,5,5,0,0,0,0,0,0],
+    [0,0,0,1,5,5,1,0,0,0,0,0],
+    [0,0,1,0,5,5,0,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ];
+  grid.forEach(row => row.forEach(c => {
+    const s = document.createElement('span');
+    s.style.cssText = `display:block;width:5px;height:5px;background:${fc[c]||'transparent'}`;
+    el.appendChild(s);
+  }));
+})();
+</script>
 </body>
 </html>
