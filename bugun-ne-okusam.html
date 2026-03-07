@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bugün Ne Okusam? — Bu Muydu?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a1208;
+    --green: #4a9a5f;
+    --green-pale: #1a2e1e;
+    --green-glow: rgba(74,154,95,0.15);
+    --cream: #f0ede6;
+    --muted: rgba(240,237,230,0.45);
+    --border: rgba(74,154,95,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    background: rgba(10,18,8,0.95);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--green);
+    text-decoration: none;
+  }
+  .nav-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 140px 4rem 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 80px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,154,95,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--green);
+    opacity: 0.4;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .hero-desc {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  /* QUIZ CONTAINER */
+  .quiz-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* PROGRESS */
+  .progress-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
+  .progress-dot {
+    width: 32px; height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    transition: background 0.4s ease;
+  }
+  .progress-dot.active { background: var(--green); }
+  .progress-dot.done { background: rgba(74,154,95,0.4); }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--green-pale);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .question-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .question-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .option {
+    background: rgba(10,18,8,0.6);
+    border: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+  }
+  .option:hover {
+    border-color: var(--green);
+    background: rgba(74,154,95,0.08);
+  }
+  .option.selected {
+    border-color: var(--green);
+    background: rgba(74,154,95,0.15);
+  }
+
+  .option-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .option-text {
+    font-size: 0.95rem;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  /* NEXT BUTTON */
+  .btn-next {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--green);
+    color: var(--bg);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .btn-next.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .btn-next:hover { opacity: 0.85; }
+
+  /* RESULT */
+  .result-wrap {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .result-wrap.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .result-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-subtitle {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .book-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .book-card {
+    background: var(--green-pale);
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .book-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .book-spine {
+    width: 6px;
+    align-self: stretch;
+    background: var(--green);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .book-info { flex: 1; }
+
+  .book-genre {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.4rem;
+  }
+
+  .book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+
+  .book-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .book-why {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .book-match {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    margin-top: 0.8rem;
+  }
+
+  /* COFFEE */
+  .coffee-box {
+    background: #070e06;
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .coffee-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    margin-bottom: 0.8rem;
+  }
+
+  .coffee-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .btn-coffee {
+    display: inline-block;
+    padding: 0.9rem 2.5rem;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .btn-coffee:hover {
+    background: var(--green);
+    color: var(--bg);
+  }
+
+  .btn-restart {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.9rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+  footer a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 120px 1.5rem 60px; }
+    .quiz-wrap { padding: 0 1rem 4rem; }
+    .question-card { padding: 2rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Bu Muydu?</a>
+  <span class="nav-tag">Kitap Keşif Aracı</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Keşif</div>
+  <h1 class="hero-title">Bugün<br><em>Ne Okusam?</em></h1>
+  <p class="hero-desc">5 soru, sana özel 3 kitap önerisi. Okumak istiyorsun ama nereden başlayacağını bilmiyorsun — bırak ben söyleyeyim.</p>
+</div>
+
+<div class="quiz-wrap">
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-dot active" id="dot-0"></div>
+    <div class="progress-dot" id="dot-1"></div>
+    <div class="progress-dot" id="dot-2"></div>
+    <div class="progress-dot" id="dot-3"></div>
+    <div class="progress-dot" id="dot-4"></div>
+  </div>
+
+  <!-- QUESTION CARD -->
+  <div class="question-card visible" id="questionCard">
+    <div class="question-number" id="questionNumber">Soru 01 / 05</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">Devam Et →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-wrap" id="resultWrap">
+    <div class="result-header">
+      <div class="result-label">Senin için seçtim</div>
+      <h2 class="result-title" id="resultTitle"></h2>
+      <p class="result-subtitle" id="resultSubtitle"></p>
+    </div>
+    <div class="book-grid" id="bookGrid"></div>
+    <div class="coffee-box">
+      <p class="coffee-title">"Bu öneri işine yaradıysa..."</p>
+      <p class="coffee-desc">Bu araç tamamen ücretsiz. Ama bir kahve ısmarlasan çok sevinirim — daha iyi öneriler yapmama yardımcı olur.</p>
+      <a href="https://ko-fi.com/bumuydu" target="_blank" class="btn-coffee">☕ Kahve Ismarla</a>
+    </div>
+    <button class="btn-restart" onclick="restartQuiz()">↺ Yeniden Başla</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Bu Muydu? — Tüm hakları saklıdır.</p>
+  <a href="https://www.youtube.com/@bumuydu" target="_blank">YouTube Kanalı →</a>
+</footer>
+
+<script>
+const questions = [
+  {
+    text: "Şu an ruh halin nasıl?",
+    options: [
+      { text: "Huzursuz, bir şeyler arıyorum", value: "restless" },
+      { text: "Sakin, derin bir şeyler okumak istiyorum", value: "calm" },
+      { text: "Meraklı, öğrenmek istiyorum", value: "curious" },
+      { text: "Yorgun, hafif bir şey olsun", value: "tired" }
+    ]
+  },
+  {
+    text: "Okurken ne hissettirmesini istiyorsun?",
+    options: [
+      { text: "Başka bir dünyaya kaçayım", value: "escape" },
+      { text: "Kendim hakkında bir şey öğreneyim", value: "self" },
+      { text: "Dünyayı daha iyi anlayayım", value: "world" },
+      { text: "Sadece keyif alayım", value: "joy" }
+    ]
+  },
+  {
+    text: "Kaç saatin var okumak için?",
+    options: [
+      { text: "Çok az — günde 15-20 dakika", value: "short" },
+      { text: "Orta — günde 1 saat", value: "medium" },
+      { text: "Bol — istediğim kadar", value: "long" }
+    ]
+  },
+  {
+    text: "Hangi tür okumaktan en çok keyif alırsın?",
+    options: [
+      { text: "Roman — hikaye, karakterler, duygular", value: "novel" },
+      { text: "Deneme / düşünce kitapları", value: "essay" },
+      { text: "Tarih veya biyografi", value: "history" },
+      { text: "Bilim veya felsefe", value: "science" },
+      { text: "Polisiye veya gerilim", value: "thriller" }
+    ]
+  },
+  {
+    text: "Son okuduğun kitap seni nasıl bıraktı?",
+    options: [
+      { text: "Çok etkilendim, hâlâ düşünüyorum", value: "moved" },
+      { text: "Güzeldi ama fazla karmaşıktı", value: "complex" },
+      { text: "Sıkıldım, bitmesini bekledim", value: "bored" },
+      { text: "Uzun zamandır okumadım", value: "noread" }
+    ]
+  }
+];
+
+const bookDatabase = {
+  escape: {
+    novel: [
+      { title: "Yüzyıllık Yalnızlık", author: "Gabriel García Márquez", genre: "Roman / Büyülü Gerçekçilik", why: "Makondo'nun destansı hikayesine bir kez girdin mi çıkamazsın. Zaman ve bellek üzerine şiir gibi bir roman.", match: "Kaçış isteğine %97 uyumlu" },
+      { title: "Howl'un Yürüyen Şatosu", author: "Diana Wynne Jones", genre: "Fantezi Roman", why: "Büyülü, sıcak, beklenmedik. Miyazaki'nin filmini sevdiysen kitabı seni büyüler.", match: "Başka bir dünyaya götürür" },
+      { title: "Kürk Mantolu Madonna", author: "Sabahattin Ali", genre: "Türk Klasiği", why: "Kısa ama derin. Bir aşkın, bir yalnızlığın romanı. Okuduktan sonra sessiz kalırsın.", match: "Duygusal derinlik" }
+    ],
+    thriller: [
+      { title: "Kız Trende", author: "Paula Hawkins", genre: "Polisiye / Gerilim", why: "Güvenilmez anlatıcılar, katmanlı sırlar. Bir oturumda bitirebilirsin.", match: "Sayfa çevirme hızı yüksek" },
+      { title: "Dövme", author: "Stieg Larsson", genre: "İskandinav Noir", why: "Millenium serisinin ilki. Karanlık, zeki, bağımlılık yapıcı.", match: "Gerilim tutkunları için" },
+      { title: "Rebecca", author: "Daphne du Maurier", genre: "Gotik Gerilim", why: "Klasik bir obsesyon ve gizem hikayesi. Manderley'i asla unutamazsın.", match: "Atmosfer ve gerilim" }
+    ],
+    history: [
+      { title: "Sapiens", author: "Yuval Noah Harari", genre: "Tarih / Bilim", why: "İnsanlık tarihine kuş bakışı. Her sayfada yeni bir perspektif.", match: "Geniş bakış açısı" },
+      { title: "Osmanlı'nın Son Günleri", author: "Ryan Gingeras", genre: "Tarih", why: "Yakın tarihe farklı bir pencere. Anlayamadığın şeyleri aydınlatır.", match: "Tarih meraklısı için" },
+      { title: "Tuzak", author: "Daniel Silva", genre: "Tarihî Gerilim", why: "Tarih ve gerilimi harmanlayan usta bir seri.", match: "Tarih + aksiyon" }
+    ]
+  },
+  self: {
+    novel: [
+      { title: "Siddharta", author: "Hermann Hesse", genre: "Felsefi Roman", why: "Kendini arama yolculuğunun en güzel romanı. Kısa, yoğun, kalıcı.", match: "İç yolculuk için ideal" },
+      { title: "Baba ve Piç", author: "Elif Şafak", genre: "Türk Edebiyatı", why: "Kimlik, aile, köken. Kendini anlamak isteyenler için güçlü bir ayna.", match: "Kimlik keşfi" },
+      { title: "Yabancı", author: "Albert Camus", genre: "Varoluşçu Roman", why: "Kısa ama sarsıcı. Meursault ile yüzleşmek seni değiştirir.", match: "Varoluş soruları için" }
+    ],
+    essay: [
+      { title: "Olmak ya da Olmamak", author: "Erich Fromm", genre: "Felsefe / Psikoloji", why: "Sahip olmak mı, olmak mı? Bu soruyu hiç düşünmediysen zamanı geldi.", match: "Derin özeleştiri için" },
+      { title: "Şimdiki Anın Gücü", author: "Eckhart Tolle", genre: "Kişisel Gelişim", why: "Kafan çok çalışıyorsa bu kitap dur demeyi öğretiyor.", match: "Zihinsel huzur için" },
+      { title: "Dört Anlaşma", author: "Don Miguel Ruiz", genre: "Felsefe / Yaşam", why: "Basit ama güçlü. Kendi kendine koyduğun zincirleri fark ettirir.", match: "Pratik felsefe" }
+    ]
+  },
+  world: {
+    science: [
+      { title: "Kısa Dünya Tarihi", author: "Bill Bryson", genre: "Bilim Tarihi", why: "Bilimi bu kadar eğlenceli anlatan başka yazar yok. Sayfalarca gülerek öğrenirsin.", match: "Merak tutkunları için" },
+      { title: "Evrenin Kısa Tarihi", author: "Stephen Hawking", genre: "Fizik / Kozmoloji", why: "Sonsuzlukla yüzleşmek istiyorsan başlangıç noktası bu.", match: "Büyük sorular için" },
+      { title: "Düşünen Hızlı ve Yavaş", author: "Daniel Kahneman", genre: "Psikoloji / Davranış", why: "Neden mantıksız kararlar alırız? Beyninin işleyişini anlamak için şart.", match: "İnsan psikolojisi" }
+    ],
+    history: [
+      { title: "Sapiens", author: "Yuval Noah Harari", genre: "Tarih / Antropoloji", why: "Bu kitabı okumayan biriyle artık konuşmak istemiyor olacaksın.", match: "Dünya görüşünü değiştirir" },
+      { title: "Salt Tuz", author: "Mark Kurlansky", genre: "Kültür Tarihi", why: "Bir malzeme üzerinden tüm insanlık tarihini anlatmak mümkünmüş.", match: "Farklı perspektif" },
+      { title: "Tufandan Önce", author: "Cormac McCarthy", genre: "Edebiyat / Felsefe", why: "Bir diyalog romanı. İnanç, şiddet, anlam. Kafayı çıkartacaksın.", match: "Derin okuyucu için" }
+    ]
+  },
+  joy: {
+    novel: [
+      { title: "Matilda", author: "Roald Dahl", genre: "Klasik / Eğlenceli", why: "Büyükler için de. Saf, zeki, neşeli. Zevkle okursun.", match: "Saf keyif için" },
+      { title: "Martı", author: "Anton Çehov", genre: "Kısa Hikayeler", why: "Kısa ama derinlikli. Her hikaye ayrı bir şarkı gibi.", match: "Hafif ve derin" },
+      { title: "Küçük Prens", author: "Antoine de Saint-Exupéry", genre: "Klasik / Felsefe", why: "Her okuyuşta farklı bir şey görürsün. Asla eskimez.", match: "Zamansız bir klasik" }
+    ],
+    thriller: [
+      { title: "Sherlock Holmes Maceraları", author: "Arthur Conan Doyle", genre: "Polisiye Klasik", why: "Sürükleyici, zekice, eğlenceli. Saatlerin nasıl geçtiğini anlamazsın.", match: "Keyifli okuma" },
+      { title: "Agatha Christie Seçkisi", author: "Agatha Christie", genre: "Klasik Polisiye", why: "Poirot veya Miss Marple — hangisinden başlarsan başla, bağımlı olursun.", match: "Bulmaca zevki" }
+    ]
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+let selectedOption = null;
+
+function init() {
+  showQuestion(0);
+}
+
+function showQuestion(index) {
+  const q = questions[index];
+  document.getElementById('questionNumber').textContent = `Soru ${String(index+1).padStart(2,'0')} / 05`;
+  document.getElementById('questionText').textContent = q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D', 'E'];
+  
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt.text}</span>`;
+    div.addEventListener('click', () => selectOption(div, opt.value));
+    container.appendChild(div);
+  });
+
+  document.getElementById('btnNext').classList.remove('visible');
+  selectedOption = null;
+
+  updateProgress(index);
+
+  const card = document.getElementById('questionCard');
+  card.classList.remove('visible');
+  setTimeout(() => card.classList.add('visible'), 50);
+}
+
+function selectOption(el, value) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedOption = value;
+  document.getElementById('btnNext').classList.add('visible');
+}
+
+function nextQuestion() {
+  if (!selectedOption) return;
+  answers.push(selectedOption);
+  currentQuestion++;
+
+  if (currentQuestion >= questions.length) {
+    showResult();
+  } else {
+    showQuestion(currentQuestion);
+  }
+}
+
+function updateProgress(index) {
+  for (let i = 0; i < 5; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.className = 'progress-dot';
+    if (i < index) dot.classList.add('done');
+    else if (i === index) dot.classList.add('active');
+  }
+}
+
+function showResult() {
+  document.getElementById('questionCard').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'none';
+
+  const mood = answers[0];
+  const want = answers[1];
+  const genre = answers[3];
+
+  let books = [];
+  const moodKey = want || 'escape';
+  const genreKey = genre || 'novel';
+
+  if (bookDatabase[moodKey] && bookDatabase[moodKey][genreKey]) {
+    books = bookDatabase[moodKey][genreKey];
+  } else if (bookDatabase[moodKey]) {
+    const keys = Object.keys(bookDatabase[moodKey]);
+    books = bookDatabase[moodKey][keys[0]];
+  } else {
+    books = bookDatabase['escape']['novel'];
+  }
+
+  books = books.slice(0, 3);
+
+  const titles = {
+    escape: "Kaçmak İsteyenler İçin",
+    self: "Kendini Arayanlar İçin",
+    world: "Dünyayı Anlamak İçin",
+    joy: "Saf Keyif İçin"
+  };
+
+  const subtitles = {
+    escape: "Bu kitaplar seni başka bir yere götürür.",
+    self: "Bu kitaplar sana kendinle ilgili bir şeyler söyler.",
+    world: "Bu kitaplar dünyaya bakışını değiştirir.",
+    joy: "Bu kitaplar sadece iyi hissettirmek için."
+  };
+
+  document.getElementById('resultTitle').textContent = titles[moodKey] || "Senin İçin Seçtim";
+  document.getElementById('resultSubtitle').textContent = subtitles[moodKey] || "";
+
+  const grid = document.getElementById('bookGrid');
+  grid.innerHTML = '';
+
+  books.forEach((book, i) => {
+    const card = document.createElement('div');
+    card.className = 'book-card';
+    card.innerHTML = `
+      <div class="book-spine"></div>
+      <div class="book-info">
+        <div class="book-genre">${book.genre}</div>
+        <div class="book-title">${book.title}</div>
+        <div class="book-author">${book.author}</div>
+        <div class="book-why">${book.why}</div>
+        <div class="book-match">→ ${book.match}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 200 + i * 150);
+  });
+
+  const result = document.getElementById('resultWrap');
+  result.style.display = 'block';
+  setTimeout(() => result.classList.add('visible'), 50);
+}
+
+function restartQuiz() {
+  currentQuestion = 0;
+  answers = [];
+  selectedOption = null;
+
+  document.getElementById('resultWrap').classList.remove('visible');
+  setTimeout(() => {
+    document.getElementById('resultWrap').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'flex';
+    document.getElementById('questionCard').style.display = 'block';
+    showQuestion(0);
+  }, 300);
+}
+
+init();
+</script>
+</body>
+</html>
