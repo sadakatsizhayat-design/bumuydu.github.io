@@ -248,14 +248,12 @@
     font-style: italic;
   }
 
-  /* Spotify embed */
   .spotify-wrap {
     margin-top: 0.8rem;
     border-radius: 12px;
     overflow: hidden;
   }
 
-  /* Wishlist */
   .wish-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -272,7 +270,6 @@
   .wish-item .item-label { margin-bottom: 0.5rem; }
   .wish-item .item-text { font-size: 0.9rem; }
 
-  /* Günün sorusu */
   .question-box {
     background: var(--green-pale);
     border: 1px solid rgba(74,154,95,0.3);
@@ -288,10 +285,10 @@
     line-height: 1.4;
   }
 
-  /* Otoportre */
+  /* Otoportre - düzeltildi */
   .portrait-box {
     background: var(--green-pale);
-    aspect-ratio: 4/3;
+    max-height: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -323,7 +320,6 @@
   }
 
   footer {
-    background: style="filter:invert(1) hue-rotate(120deg) saturate(0.8) brightness(0.9);";
     padding: 2.5rem 4rem;
     border-top: 1px solid var(--border);
     display: flex;
@@ -465,9 +461,6 @@
         <div class="item-text">Çiçek tohumları 🌱 İlkbaharda bahçeme kuracağım çiçek bahçesi için gezdikçe topluyorum.</div>
       </div>
     </div>
-
-  </div>
-
   </div>
 
   <!-- 03 FREKANS KAYDI -->
@@ -494,7 +487,8 @@
       <div class="item">
         <div class="item-dot"></div>
         <div class="item-inner">
-<div class="item-text">Pentagon, Anthropic'i "tedarik zinciri riski" ilan etti. Anthropic yapay zekasını silah sistemlerine entegre etmeyi reddetti. <a href="https://www.theguardian.com/technology/2026/mar/05/trump-anthropic-ai-pentagon" target="_blank" style="color:var(--green);font-family:'DM Mono',monospace;font-size:0.6rem;">→ kaynak</a></div>        </div>
+          <div class="item-text">Pentagon, Anthropic'i "tedarik zinciri riski" ilan etti. Anthropic yapay zekasını silah sistemlerine entegre etmeyi reddetti. <a href="https://www.theguardian.com/technology/2026/mar/05/trump-anthropic-ai-pentagon" target="_blank" style="color:var(--green);font-family:'DM Mono',monospace;font-size:0.6rem;">→ kaynak</a></div>
+        </div>
       </div>
 
       <div class="item">
@@ -552,7 +546,6 @@
       <div class="item-label" style="margin-bottom:0.8rem;">Parazit</div>
       <p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--cream);line-height:1.4;">"Bir makine savaşa karar verirse, vicdanı olan kim olur?"</p>
     </div>
-
   </div>
 
   <!-- 04 KİŞİSEL NOTLAR -->
@@ -566,7 +559,7 @@
     </div>
   </div>
 
-<!-- 05 OTOPORTre -->
+  <!-- 05 OTOPORTre -->
   <div class="card">
     <div class="section-label">05</div>
     <div class="card-title"><em>Otoportre</em></div>
@@ -576,8 +569,9 @@
     </div>
     <p class="portrait-caption">"Düşünüyorum, öyleyse varım." — René Descartes</p>
   </div>
-  
-<div class="card dark wide">
+
+  <!-- Bugün Ne Okusam -->
+  <div class="card dark wide">
     <div class="section-label">→</div>
     <div class="card-title">Bugün<br><em>Ne Okusam?</em></div>
     <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem;">Sana 5 soru soracağım — ruh halin, vaktin, ne hissetmek istediğin. Cevaplarına göre tam sana özel 3 kitap önereceğim.</p>
@@ -587,24 +581,28 @@
       <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--green);">③ Okumaya başla</div>
     </div>
     <a href="bugun-ne-okusam.html" style="display:inline-block;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--bg);background:var(--green);padding:0.9rem 2rem;text-decoration:none;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Teste Başla →</a>
-</div>
-<div class="card dark" style="background:#070e06;">
-  <div class="section-label">06</div>
-  <div class="card-title"><em>Düşüncelerini Paylaş</em></div>
-  <p style="color:var(--muted);font-size:0.95rem;margin-bottom:2rem;">Bu yazı hakkında ne düşünüyorsun? Yorumun, sorun, tepkin — hepsi bana ulaşır.</p>
-  <div style="max-width:520px;">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe1oLIKTfhCdQ9e_lbJCEyrQH2l3HOfr0GJ4R3DhFoTMNi7vg/viewform?embedded=true" 
-        width="100%" 
-        height="700" 
-        frameborder="0" 
-        marginheight="0" 
-        marginwidth="0"
-        style="filter:invert(1) hue-rotate(180deg) saturate(0.3);">
-      Yükleniyor…
-    </iframe>
   </div>
+
+  <!-- 06 Düşüncelerini Paylaş -->
+  <div class="card dark" style="background:#070e06;">
+    <div class="section-label">06</div>
+    <div class="card-title"><em>Düşüncelerini Paylaş</em></div>
+    <p style="color:var(--muted);font-size:0.95rem;margin-bottom:2rem;">Bu yazı hakkında ne düşünüyorsun? Yorumun, sorun, tepkin — hepsi bana ulaşır.</p>
+    <div style="max-width:520px;">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe1oLIKTfhCdQ9e_lbJCEyrQH2l3HOfr0GJ4R3DhFoTMNi7vg/viewform?embedded=true" 
+          width="100%" 
+          height="700" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0"
+          style="filter:invert(1) hue-rotate(180deg) saturate(0.3);">
+        Yükleniyor…
+      </iframe>
+    </div>
+  </div>
+
 </div>
-</div>
+
 <footer>
   <p>© 2026 Bu Muydu? — Tüm hakları saklıdır.</p>
   <div class="footer-links">
@@ -614,7 +612,7 @@
   </div>
 </footer>
 
-  <script>
+<script>
 (function() {
   const el = document.getElementById('pixel-flower');
   if (!el) return;
