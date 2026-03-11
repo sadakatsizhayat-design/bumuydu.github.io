@@ -11,7 +11,7 @@ tarih_tr = f"{bugun.day} {aylar[bugun.month-1]} {bugun.year}"
 gun_tr = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"][bugun.weekday()]
 
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 PROMPT = f"""Bugün {gun_tr}, {tarih_tr}. 
 
