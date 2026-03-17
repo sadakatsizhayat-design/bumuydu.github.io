@@ -62,59 +62,32 @@
   /* HERO */
   .hero {
     margin-top: 4rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    min-height: auto;
-    gap: 2rem;
+    display: inline-flex;
+    gap: 0;
     padding: 2rem;
     background: var(--bg);
+    width: auto;
   }
 
   .hero-image {
     position: relative;
     overflow: hidden;
     background: #1a2a25;
-    max-width: 400px;
-    margin: 2rem 0 2rem 2rem;
+    width: 320px;
+    flex-shrink: 0;
+    margin: 0;
     border-radius: 4px;
   }
 
-  .hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0.85;
-  }
-
-  .hero-image-placeholder {
-    width: 100%;
-    height: 100%;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    background: linear-gradient(135deg, #1a2a25, #0d1a16);
-    color: rgba(255,255,255,0.3);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .hero-image-placeholder span { font-size: 4rem; opacity: 0.2; }
-
   .hero-content {
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     background: var(--white);
     border-left: 1px solid var(--border);
+    width: 380px;
+    flex-shrink: 0;
   }
 
   .film-tag {
@@ -300,13 +273,77 @@
   }
   .footer-links a:hover { color: var(--white); }
 
+  .hero-prev {
+    padding: 0.8rem 1rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .hero-prev .prev-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .hero-prev .prev-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero-prev .prev-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .hero-prev .prev-title em {
+    font-style: italic;
+    color: var(--green-light);
+  }
+
+  .hero-prev .prev-link:hover .prev-title {
+    color: white;
+  }
+
+  .hero-prev-list {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .prev-list-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .prev-list-item {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .prev-list-item em { font-style: italic; color: var(--green); }
+  .prev-list-item:hover { color: var(--green); }
+
   /* PREV NEXT BAR */
   .prev-next-bar {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
     padding: 1rem 4rem;
-    display: flex;
-    justify-content: flex-start;
+    display: inline-flex;
+    margin-left: 2rem;
   }
 
   .prev-link {
@@ -348,91 +385,53 @@
     max-width: 720px;
     margin: 0 auto;
     padding: 0 4rem 5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
   }
 
   .other-posts-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .post-card {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 1.5rem;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    text-decoration: none;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .post-card:hover {
-    border-color: var(--green);
-    box-shadow: 0 4px 20px rgba(45,74,62,0.1);
-  }
-
-  .post-card-image {
-    background: #1a2a25;
-    overflow: hidden;
-  }
-
-  .post-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0.85;
-  }
-
-  .post-card-content {
-    padding: 1.5rem 1.5rem 1.5rem 0;
+  .post-inline {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
 
-  .post-card-tag {
+  .post-inline:hover { opacity: 0.7; }
+
+  .post-inline-tag {
     font-family: 'DM Mono', monospace;
     font-size: 0.55rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--green);
+    color: var(--muted);
   }
 
-  .post-card-title {
+  .post-inline-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 900;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--ink);
-    line-height: 1.1;
   }
 
-  .post-card-title em {
+  .post-inline-title em {
     font-style: italic;
     color: var(--green);
   }
 
-  .post-card-meta {
+  .post-inline-arrow {
     font-family: 'DM Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    margin: 0;
-  }
-
-  .post-card-excerpt {
-    font-family: 'Lora', serif;
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-    line-height: 1.5;
-    margin: 0;
+    font-size: 0.8rem;
+    color: var(--green);
   }
 
   @media (max-width: 900px) {
@@ -455,11 +454,19 @@
   <a href="index.html" class="nav-back">← Ana Sayfa</a>
 </nav>
 
-<div class="hero">
-  <div class="hero-image">
-    <img src="hamnet.png" alt="Hamnet" style="width:100%;height:100%;object-fit:cover;display:block;">
+<div style="margin-top:4rem; padding: 2rem; background: var(--bg); display: flex; gap: 0;">
+  <div style="display: flex; flex-direction: column; margin: 0; flex-shrink: 0;">
+    <div style="width: 320px; overflow: hidden; background: #1a2a25; border-radius: 4px 4px 0 0;">
+      <img src="hamnet.png" alt="Hamnet" style="width:100%;display:block;">
+    </div>
+    <div style="width: 320px; background: var(--white); border: 1px solid var(--border); border-top: none; padding: 0.8rem 1.2rem;">
+      <a href="the-bride.html" style="display:flex; align-items:center; gap:0.8rem; text-decoration:none;">
+        <span style="font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Önceki Yazı</span>
+        <span style="font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--ink);">The <em style="font-style:italic; color:var(--green);">Bride!</em></span>
+      </a>
+    </div>
   </div>
-  <div class="hero-content">
+  <div style="padding: 1.5rem 2rem; display:flex; flex-direction:column; justify-content:flex-start; background: var(--white); border-left: 1px solid var(--border); width: 380px; flex-shrink:0;">
     <span class="film-tag">Film · 2025</span>
     <h1 class="film-title"><em>Hamnet</em></h1>
     <div class="film-meta">
@@ -469,13 +476,6 @@
     </div>
     <p class="film-intro">1596'da toprağa verilen on bir yaşındaki bir çocuk, dört yüz otuz yılın ardından bir roman oldu, bir film oldu, bir Oscar heykeli oldu. Ama bunların hepsinden önce bir isimdi. Hamnet.</p>
   </div>
-</div>
-
-<div class="prev-next-bar">
-  <a href="the-bride.html" class="prev-link">
-    <span class="prev-label">Önceki Yazı</span>
-    <span class="prev-title">The <em>Bride!</em></span>
-  </a>
 </div>
 
 <article class="article">
@@ -538,16 +538,10 @@
 
 <div class="other-posts">
   <p class="other-posts-label">Diğer Yazılar</p>
-  <a href="the-bride.html" class="post-card">
-    <div class="post-card-image">
-      <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/The_Bride%21_%282026%29_poster.jpg" alt="The Bride!">
-    </div>
-    <div class="post-card-content">
-      <span class="post-card-tag">Film · 2026</span>
-      <h3 class="post-card-title">The <em>Bride!</em></h3>
-      <p class="post-card-meta">Maggie Gyllenhaal · Jessie Buckley, Christian Bale</p>
-      <p class="post-card-excerpt">Tıpkı Frankenstein'ın yaratığı gibi: biraz korkutucu, biraz trajik, ama kesinlikle unutulmaz.</p>
-    </div>
+  <a href="the-bride.html" class="post-inline">
+    <span class="post-inline-tag">Film · 2026</span>
+    <span class="post-inline-title">The <em>Bride!</em></span>
+    <span class="post-inline-arrow">→</span>
   </a>
 </div>
 
