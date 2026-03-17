@@ -300,6 +300,49 @@
   }
   .footer-links a:hover { color: var(--white); }
 
+  /* PREV NEXT BAR */
+  .prev-next-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 4rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .prev-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+
+  .prev-link:hover { color: var(--green); }
+
+  .prev-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .prev-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+
+  .prev-title em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .prev-link:hover .prev-title { color: var(--green); }
+
   /* OTHER POSTS */
   .other-posts {
     max-width: 720px;
@@ -426,6 +469,13 @@
     </div>
     <p class="film-intro">1596'da toprağa verilen on bir yaşındaki bir çocuk, dört yüz otuz yılın ardından bir roman oldu, bir film oldu, bir Oscar heykeli oldu. Ama bunların hepsinden önce bir isimdi. Hamnet.</p>
   </div>
+</div>
+
+<div class="prev-next-bar">
+  <a href="the-bride.html" class="prev-link">
+    <span class="prev-label">Önceki Yazı</span>
+    <span class="prev-title">The <em>Bride!</em></span>
+  </a>
 </div>
 
 <article class="article">
