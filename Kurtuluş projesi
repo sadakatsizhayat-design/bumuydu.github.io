@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Project Hail Mary — Bu Muydu?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --green: #2d4a3e;
+    --green-light: #4a7c6f;
+    --green-pale: #e8f0ed;
+    --ink: #1a1a1a;
+    --muted: #7a8c85;
+    --border: #dde8e3;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--green);
+    text-decoration: none;
+  }
+  .nav-back {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--green); }
+
+  /* HERO */
+  .hero {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    min-height: auto;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--bg);
+  }
+
+  .hero-image {
+    position: relative;
+    overflow: hidden;
+    background: #1a2a25;
+    max-width: 400px;
+    margin: 2rem 0 2rem 2rem;
+    border-radius: 4px;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+  }
+
+  .hero-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+  }
+
+  .film-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-pale);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .film-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .film-title em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .film-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .film-meta span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .film-meta strong {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .film-intro {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.7;
+    border-left: 3px solid var(--green);
+    padding-left: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  /* ARTICLE */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+
+  .article p {
+    margin-bottom: 1.8rem;
+    color: var(--ink);
+  }
+
+  .article h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green);
+    margin: 3rem 0 1rem;
+    line-height: 1.2;
+  }
+
+  .article h2 em { font-style: italic; }
+
+  .article blockquote {
+    background: var(--green-pale);
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article blockquote p {
+    font-style: italic;
+    color: var(--green);
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .divider {
+    text-align: center;
+    margin: 3rem 0;
+    color: var(--green);
+    letter-spacing: 0.5em;
+    font-size: 0.8rem;
+  }
+
+  /* RATING */
+  .rating-box {
+    background: var(--green);
+    color: var(--white);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 0 4rem 4rem;
+  }
+
+  .rating-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .rating-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .rating-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    max-width: 400px;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--green);
+    color: var(--white);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    opacity: 0.5;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-image { max-width: 100%; margin: 0; }
+    .hero-content { padding: 3rem 1.5rem; }
+    .article { padding: 3rem 1.5rem; }
+    .rating-box { margin: 0 1.5rem 3rem; padding: 2rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Bu Muydu?</a>
+  <a href="index.html" class="nav-back">← Ana Sayfa</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-image">
+    <img src="4kJR2.jpg" alt="Project Hail Mary" style="width:100%;height:100%;object-fit:contain;padding:2rem;display:block;">
+  </div>
+  <div class="hero-content">
+    <span class="film-tag">Film · 2025</span>
+    <h1 class="film-title">Project<br><em>Hail Mary</em></h1>
+    <div class="film-meta">
+      <span><strong>Yönetmen</strong> Phil Lord, Christopher Miller</span>
+      <span><strong>Oyuncular</strong> Ryan Gosling</span>
+    </div>
+    <p class="film-intro">Kurtuluş, tek başına kazanılan bir zafer değil, birlikte kurulan bir evdi. Ve o el tutulmadığı sürece, hiçbir dua ulaşılamayacak kadar uzakta kalacaktı.</p>
+  </div>
+</div>
+
+<article class="article">
+
+  <p>Sevgili okuyucu,</p>
+
+  <p>Modern sinemanın en ilginç yanlarından biri, bazen bir filmin kendisinin de tıpkı anlattığı hikâye gibi bir "yaratık" olmasıdır. Andy Weir'in çok sevilen romanından Phil Lord ve Christopher Miller tarafından beyazperdeye taşınan Project Hail Mary, ilk bakışta klasik bir "yalnız deha kurtarıyor" anlatısı gibi görünse de derinlemesine bir okuma bu yapının aslında kolektif bir zorunluluk, etik bir dayanışma ve bireysel iradenin sistem tarafından gaspı üzerine inşa edildiğini ortaya koyuyor.</p>
+
+  <p>Film, steril bir sessizlikle başlıyor. Ryland Grace gözlerini açtığında karşısında bir ekran var. Bilgisayarın ona sorduğu o basit "2+2 kaç eder?" sorusu, yalnızca matematiksel bir test değil; zihnindeki yıkılmış köprüleri yeniden kurmaya çalışan soğuk bir el. Bu soru, rasyonel benliğin yeniden inşası için atılan ilk ontolojik adım.</p>
+
+  <p>Grace yavaş yavaş onun bir ortaokul fen bilgisi öğretmeni ve eski bir moleküler biyolog olduğunu hatırlıyor. Geçmişte bilim insanları Güneş'in kararmasını ve Güneş'ten Venüs'e "Petrova çizgisi" adı verilen bir kızılötesi çizginin oluşumunu gözlemlemişlerdi. Astrophage, yani Yunanca "yıldız yiyen" olarak bilinen bir mikroorganizmanın yarattığı bu kararma, otuz yıl içinde Dünya'nın küresel olarak felaket bir şekilde soğumasına yol açacaktı.</p>
+
+  <blockquote>
+    <p>"Kurtuluş, boşluğa uzattığın elini tutan o 'öteki' kadardı; cennet tek başına kazanılmazdı, kazanılacaksa birlikte kazanılırdı."</p>
+  </blockquote>
+
+  <h2>Eva Stratt ve <em>Utilitaryan Matematik</em></h2>
+
+  <p>Anlatının etik ağırlık merkezini oluşturan Eva Stratt, "en büyük iyilik için en az kötülük" ilkesini radikal bir boyuta taşıyor. Stratt'ın Ryland Grace'i zorla gemiye bindirmesi, modern hukuk ve etik normlarının askıya alındığı bir "istisna hali". Grace ölmekten korkup reddedince, Stratt onu uyuşturmuş ve zorla Hail Mary'ye bindirmiş. İnsanlığın hayatta kalması için bir "araç" olarak kurban edilen Grace, başlangıçta kendi iradesinden soyutlanmış bir Prometheus figürü.</p>
+
+  <p>Bu durum, Sofokles'in Philoktetes oyunundaki trajediyle paralellik gösteriyor. Stratt'ın Grace'e yaklaşımı, Odysseus'un Philoktetes'e yaklaşımıyla aynı kökten besleniyor: İnsanı bir amaç değil, bir araç olarak görmek.</p>
+
+  <div class="divider">· · ·</div>
+
+  <h2>Rocky ve <em>Öteki'nin Yüzü</em></h2>
+
+  <p>Filmin asıl kırılma noktası, Grace'in yalnızlığının Rocky adı verilen dışsal bir iradeyle temas etmesiyle gerçekleşiyor. 40 Eridani'den gelen, kaya benzeri, beş bacaklı bu uzaylı; alışık olduğumuz insansı uzaylı şablonlarının çok uzağında. Yine de merkezde aynı temel sızı var: kayıp ve merak.</p>
+
+  <p>Grace başlangıçta Rocky'yi bir "inceleme nesnesi" olarak görürken, aralarındaki iletişim derinleştikçe Rocky bir "Sen" haline geliyor. Martin Buber'in "Ben-Sen" ilişkisi ve Emmanuel Levinas'ın "Öteki'nin Yüzü" felsefesi üzerinden okunduğunda bu bağ, bilimkurgu tarihindeki en derin ontolojik karşılaşmalardan biri olarak öne çıkıyor.</p>
+
+  <p>Rocky'nin yankı algılama yoluyla gördüğünü anlayan Grace, onun müzikal konuşması için bir makine çeviri sistemi oluşturuyor. Bu iletişim çabası, her gün yeniden örülen, her yanlış anlaşılmada çatlayan ama her seferinde daha güçlü hale gelen bir inşa. Jean-Dominique Bauby'nin felçliyken tek bir göz kırpışıyla kurduğu iletişim gibi, tırnaklarla kazınarak inşa edilmiş bir abide.</p>
+
+  <blockquote>
+    <p>"Grace, soyadını ancak Rocky'nin pençesini tuttuğunda hak etmişti."</p>
+  </blockquote>
+
+  <h2>Görsel Dil ve <em>Müzik</em></h2>
+
+  <p>Görüntü yönetmeni Greig Fraser, Project Hail Mary'nin görsel dünyasını kurarken bilimkurgu sinemasında nadir görülen teknik yeniliklere başvurmuş. Filmin görsel dili, "Dünya" ve "Uzay" arasındaki ontolojik farkı vurgulamak üzere kurgulanmış. Geleneksel anamorfik lenslerin aksine, Alexa 65 sensörünü dikey olarak sıkıştırarak görüntüyü "yükseltmiş". Bu tercih, uzayın sonsuz derinliğini ve geminin içindeki klostrofobiyi dikey bir eksende veriyor.</p>
+
+  <p>Besteci Daniel Pemberton ise uzayın sessizliğini bir "ses duvarı" ile doldurmak yerine, o sessizliğin içindeki yabancılığı ve merakı vurgulayan bir skor hazırlamış. Melekvari korolar, Grace'in "Lütuf" ismine ve geminin dini metaforlarına (Hail Mary) atıfta bulunuyor. Rocky'nin konuşmaları ise Pemberton tarafından bestelenmiş akor dizileri; müziği salt bir fon öğesi olmaktan çıkarıp bir "karakter" haline getiriyor.</p>
+
+  <h2>Kurtuluşun <em>Bedeli</em></h2>
+
+  <p>Grace, taumoebaların ksenoniti aşabildiğini ve Rocky'nin yakıtını tükettiğini fark ettiğinde en büyük sınavını veriyor: Dünya'ya dönmek mi, dostunu kurtarmak mı? Grace, Dostoyevski'nin Alyoşa'sı gibi acıyı taşımayı seçerek ikincisini tercih ediyor. Bir kurban olarak başladığı yolculuğu, bir özne ve dost olarak tamamlıyor.</p>
+
+  <p>Film, Christopher Nolan'ın Interstellar'ındaki "Dünya'yı gözden çıkarıp sömürgeleştirme" odaklı bakış açısının aksine, Dünya'yı her ne pahasına olursa olsun savunulması gereken bir yuva olarak konumlandırıyor. Neoliberal çağın "yalnız deha" yalanı, o zifiri karanlıkta çökmüş durumda.</p>
+
+  <p>Project Hail Mary, tüm teknik problem çözme aşamalarını bazen hızlı montajlarla geçiştirmesine rağmen, bize şunu fısıldıyor: Cennet, yıldız haritalarında işaretlenmiş bir koordinat değil; yabancının melodisini kendi diline tercüme etmek için harcanan o yorucu, terli ve kutsal emek. Gerçek kurtuluş, boşluğa uzattığın elini tutan o "öteki" kadar. Ve o el tutulmadığı sürece, hiçbir dua ulaşılamayacak kadar uzakta kalacak.</p>
+
+</article>
+
+<div class="rating-box">
+  <div>
+    <p class="rating-label">Değerlendirme</p>
+    <p class="rating-score">9/10</p>
+  </div>
+  <p class="rating-text">"Yalnız deha yalanını yerle bir eden, dayanışmayı yıldızlara taşıyan bir destan."</p>
+</div>
+
+<footer>
+  <p>© 2025 Bu Muydu? — Tüm hakları saklıdır.</p>
+  <div class="footer-links">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="blog.html">Blog</a>
+    <a href="https://www.youtube.com/@bumuydu" target="_blank">YouTube</a>
+  </div>
+</footer>
+
+</body>
+</html>
