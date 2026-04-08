@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yayımlanan Haberlerim</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+        :root {
+            --bg: #0e0d0b;
+            --surface: #141310;
+            --surface-2: #1c1a17;
+            --border: #2a2721;
+            --accent: #c8622a;
+            --accent-dim: #3d2010;
+            --cream: #e8e0d0;
+            --cream-muted: #9e9486;
+            --cream-dim: #5a5348;
+            --white: #f5f0e8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--cream);
+            min-height: 100vh;
+        }
+
+        /* ─── VIEWS ─── */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* ─── LIST PAGE ─── */
+        .list-page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 48px 20px;
+        }
+
+        .page-eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .page-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .page-sub {
+            font-size: 13px;
+            color: var(--cream-muted);
+            font-weight: 300;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ─── CATEGORY ─── */
+        .category {
+            margin-bottom: 48px;
+        }
+
+        .category-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            margin-bottom: 4px;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ─── ARTICLE CARD ─── */
+        .article-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .article-card:hover .article-title {
+            color: var(--accent);
+        }
+
+        .article-card:hover .arrow {
+            transform: translateX(4px);
+            color: var(--accent);
+        }
+
+        .article-index {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-dim);
+            min-width: 28px;
+            padding-top: 2px;
+        }
+
+        .article-body {
+            flex: 1;
+        }
+
+        .article-source {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.3;
+            transition: color 0.15s;
+        }
+
+        .article-desc {
+            font-size: 12px;
+            color: var(--cream-muted);
+            font-weight: 300;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .arrow {
+            font-size: 16px;
+            color: var(--cream-dim);
+            padding-top: 2px;
+            transition: transform 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+
+        /* ─── ARTICLE PAGE ─── */
+        .article-page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 48px 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            cursor: pointer;
+            margin-bottom: 40px;
+            transition: color 0.15s;
+            background: none;
+            border: none;
+        }
+
+        .back-btn:hover { color: var(--accent); }
+
+        .article-header {
+            border: 1px solid var(--border);
+            padding: 40px 40px 32px;
+            background: var(--surface);
+            margin-bottom: 0;
+        }
+
+        .article-header .source-badge {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            margin-bottom: 20px;
+        }
+
+        .article-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .article-header .desc {
+            font-size: 14px;
+            color: var(--cream-muted);
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #0e0d0b;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 12px 22px;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+
+        .read-link:hover { opacity: 0.85; }
+
+        .article-note {
+            border: 1px solid var(--border);
+            border-top: none;
+            padding: 32px 40px;
+            background: var(--surface-2);
+        }
+
+        .note-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            margin-bottom: 10px;
+        }
+
+        .note-text {
+            font-size: 13px;
+            color: var(--cream-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px 48px;
+        }
+
+        .footer-inner {
+            border-top: 1px solid var(--accent);
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 40px;
+            background: var(--surface);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-note {
+            font-size: 11px;
+            color: var(--cream-dim);
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 30px; }
+            .article-header, .article-note { padding: 28px 24px; }
+            .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     VIEW 1 — LİSTE
+═══════════════════════════════════════ -->
+<div id="list-view" class="view active">
+    <div class="list-page">
+        <div class="page-eyebrow">Portfolyo</div>
+        <h1 class="page-title">Yayımlanan<br><em>Haberlerim</em></h1>
+        <p class="page-sub">Farklı yayın organlarında çıkmış yazı ve haberlerim.</p>
+
+        <!-- GAZETECİLİK & TEKNOLOJİ -->
+        <div class="category">
+            <div class="category-label">Gazetecilik & Teknoloji</div>
+            <div class="category-title">Newslab Turkey</div>
+
+            <div class="article-card" onclick="openArticle('newslab1')">
+                <div class="article-index">01</div>
+                <div class="article-body">
+                    <div class="article-source">Newslab Turkey</div>
+                    <div class="article-title">ChatGPT, Gemini ve Bing Cinsiyet Eşitliği Haberlerini Nasıl Değerlendiriyor?</div>
+                    <div class="article-desc">Yapay zeka araçlarının cinsiyet eşitliği haberlerini nasıl yorumladığına dair bir analiz.</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+
+        <!-- JOURNO -->
+        <div class="category">
+            <div class="category-label">Gazetecilik Tarihi & Profiller</div>
+            <div class="category-title">Journo</div>
+
+            <div class="article-card" onclick="openArticle('journo1')">
+                <div class="article-index">02</div>
+                <div class="article-body">
+                    <div class="article-source">Journo</div>
+                    <div class="article-title">Ali Naci Karacan: Araştırmacı Gazeteciliğin Öncüsüydü, Medya Patronu Oldu</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('journo2')">
+                <div class="article-index">03</div>
+                <div class="article-body">
+                    <div class="article-source">Journo</div>
+                    <div class="article-title">Martha Gellhorn: Tarihin En Büyük Savaş Muhabirlerinden Biriydi, Muktedirlere Karşı Sıradan İnsanları Savundu</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('journo3')">
+                <div class="article-index">04</div>
+                <div class="article-body">
+                    <div class="article-source">Journo</div>
+                    <div class="article-title">Nimet Arzık: İçinden Geldiği Gibi Yazan; Tek At, Tek Mızrak Gazeteci</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('journo4')">
+                <div class="article-index">05</div>
+                <div class="article-body">
+                    <div class="article-source">Journo</div>
+                    <div class="article-title">Fatma Aliye: Türkiye'nin Dünyaca Ünlü İlk Gazetecisi, Dilde Tarafsızlığı Savunmuştu</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 9. KÖY -->
+        <div class="category">
+            <div class="category-label">Medya & Çalışma Koşulları</div>
+            <div class="category-title">9. Köy</div>
+
+            <div class="article-card" onclick="openArticle('dokuzkov1')">
+                <div class="article-index">06</div>
+                <div class="article-body">
+                    <div class="article-source">9. Köy</div>
+                    <div class="article-title">Gazeteciler Asgari Ücretle Çalıştırılıyor</div>
+                    <div class="article-desc">Türkiye'de gazetecilik mesleğinin ücret koşullarına dair bir araştırma haberi.</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+
+        <!-- DEMOKRASİ İÇİN MEDYA -->
+        <div class="category">
+            <div class="category-label">Medya Özgürlüğü</div>
+            <div class="category-title">Demokrasi için Medya / Medya için Demokrasi</div>
+
+            <div class="article-card" onclick="openArticle('medya1')">
+                <div class="article-index">07</div>
+                <div class="article-body">
+                    <div class="article-source">Support to Media Freedom</div>
+                    <div class="article-title">Gazeteciği Oyunlarla Yenileme</div>
+                    <div class="article-desc">Oyunlaştırma yöntemlerinin gazetecilik eğitiminde ve habercilik pratiklerinde kullanımı üzerine.</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+
+        <!-- FEMSPORT -->
+        <div class="category">
+            <div class="category-label">Kadın Sporu Tarihi</div>
+            <div class="category-title">FemSport</div>
+
+            <div class="article-card" onclick="openArticle('femsport1')">
+                <div class="article-index">08</div>
+                <div class="article-body">
+                    <div class="article-source">FemSport</div>
+                    <div class="article-title">Wilma Rudolph: Hayatta Kalmanın ve Zaferin Mücadelesi</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('femsport2')">
+                <div class="article-index">09</div>
+                <div class="article-body">
+                    <div class="article-source">FemSport</div>
+                    <div class="article-title">Kadın Futbolunun Kurucusu: "Nettie Honeyball"</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('femsport3')">
+                <div class="article-index">10</div>
+                <div class="article-body">
+                    <div class="article-source">FemSport</div>
+                    <div class="article-title">İlona Elek: Engelleri Aşan Şampiyonun Hikayesi</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('femsport4')">
+                <div class="article-index">11</div>
+                <div class="article-body">
+                    <div class="article-source">FemSport</div>
+                    <div class="article-title">Gertrude Ederle: Dalgaların Kraliçesi</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="article-card" onclick="openArticle('femsport5')">
+                <div class="article-index">12</div>
+                <div class="article-body">
+                    <div class="article-source">FemSport</div>
+                    <div class="article-title">Viktorya Döneminin Asi Kızı: Charlotte Cooper</div>
+                </div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-inner">
+            <span class="footer-name">Yayımlanan Haberlerim</span>
+            <span class="footer-note">Tüm hakları saklıdır.</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     VIEW 2 — MAKALE DETAY
+═══════════════════════════════════════ -->
+<div id="article-view" class="view">
+    <div class="article-page">
+        <button class="back-btn" onclick="goBack()">← Geri Dön</button>
+        <div id="article-content"></div>
+    </div>
+    <div class="footer">
+        <div class="footer-inner">
+            <span class="footer-name">Yayımlanan Haberlerim</span>
+            <span class="footer-note">Tüm hakları saklıdır.</span>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const articles = {
+    newslab1: {
+        source: "Newslab Turkey",
+        title: "ChatGPT, Gemini ve Bing Cinsiyet Eşitliği Haberlerini Nasıl Değerlendiriyor?",
+        desc: "Yapay zeka araçlarının cinsiyet eşitliği haberlerini nasıl yorumladığına dair bir analiz. ChatGPT, Google Gemini ve Bing'in bu haberleri nasıl çerçevelediği, hangi önyargıları yansıtıp yansıtmadığı inceleniyor.",
+        url: "https://www.newslabturkey.org/2024/03/29/chatgpt-gemini-ve-bing-cinsiyet-esitligi-haberlerini-nasil-degerlendiriyor/",
+        note: "Newslab Turkey, gazetecilik alanında araştırma ve eğitim odaklı bağımsız bir platform."
+    },
+    journo1: {
+        source: "Journo",
+        title: "Ali Naci Karacan: Araştırmacı Gazeteciliğin Öncüsüydü, Medya Patronu Oldu",
+        desc: "Türk basın tarihinin önemli isimlerinden Ali Naci Karacan'ın hikayesi. Araştırmacı gazetecilik anlayışından medya patronluğuna uzanan yolculuğu.",
+        url: "https://journo.com.tr/ali-naci-karacan",
+        note: "Journo, Türkiye'nin önde gelen gazetecilik platformlarından biri."
+    },
+    journo2: {
+        source: "Journo",
+        title: "Martha Gellhorn: Tarihin En Büyük Savaş Muhabirlerinden Biriydi, Muktedirlere Karşı Sıradan İnsanları Savundu",
+        desc: "20. yüzyılın en önemli savaş muhabirlerinden Martha Gellhorn'un mesleki mirası ve güç karşısında sıradan insanları ön plana çıkaran gazetecilik anlayışı.",
+        url: "https://journo.com.tr/martha-gellhorn",
+        note: "Journo, Türkiye'nin önde gelen gazetecilik platformlarından biri."
+    },
+    journo3: {
+        source: "Journo",
+        title: "Nimet Arzık: İçinden Geldiği Gibi Yazan; Tek At, Tek Mızrak Gazeteci",
+        desc: "Türk basınında özgün sesi ve bağımsız duruşuyla tanınan Nimet Arzık'ın gazetecilik kariyeri ve mirası.",
+        url: "https://journo.com.tr/nimet-arzik-kimdir",
+        note: "Journo, Türkiye'nin önde gelen gazetecilik platformlarından biri."
+    },
+    journo4: {
+        source: "Journo",
+        title: "Fatma Aliye: Türkiye'nin Dünyaca Ünlü İlk Gazetecisi, Dilde Tarafsızlığı Savunmuştu",
+        desc: "Osmanlı döneminde kaleme aldığı yazılar ve gazetecilik anlayışıyla öne çıkan Fatma Aliye'nin hikayesi.",
+        url: "https://journo.com.tr/fatma-aliye-kimdir-hayati",
+        note: "Journo, Türkiye'nin önde gelen gazetecilik platformlarından biri."
+    },
+    dokuzkov1: {
+        source: "9. Köy",
+        title: "Gazeteciler Asgari Ücretle Çalıştırılıyor",
+        desc: "Türkiye'de gazetecilik mesleğinin ücret koşullarını mercek altına alan bir araştırma haberi. Sektördeki ücret adaletsizliğini belgeleyen veriler ve tanıklıklar.",
+        url: "https://9koy.org/gazeteciler-asgari-ucretle-calistiriliyor.html",
+        note: "9. Köy, bağımsız gazetecilik ve medya haberlerine odaklanan bir platform."
+    },
+    medya1: {
+        source: "Support to Media Freedom",
+        title: "Gazeteciği Oyunlarla Yenileme",
+        desc: "Oyunlaştırma (gamification) yöntemlerinin gazetecilik eğitiminde ve habercilik pratiklerinde nasıl kullanıldığını ele alan bir değerlendirme.",
+        url: "https://supporttomediafreedom.com/haberler/gazeteciligi-oyunlarla-yenileme/",
+        note: "Demokrasi için Medya / Medya için Demokrasi projesi kapsamında yayımlandı."
+    },
+    femsport1: {
+        source: "FemSport",
+        title: "Wilma Rudolph: Hayatta Kalmanın ve Zaferin Mücadelesi",
+        desc: "Çocukluğunda felç geçiren, on dokuz kardeşiyle büyüyen Wilma Rudolph'un olimpiyat şampiyonluğuna uzanan inanılmaz hikayesi.",
+        url: "https://www.femsport.net/wilma-rudolph-hayatta-kalmanin-ve-zaferin-mucadelesi/",
+        note: "FemSport, kadın sporu ve sporculara odaklanan bağımsız bir yayın platformu."
+    },
+    femsport2: {
+        source: "FemSport",
+        title: "Kadın Futbolunun Kurucusu: \"Nettie Honeyball\"",
+        desc: "19. yüzyılın sonunda kadın futbolunu organize eden ve bu mücadeleyi veren Nettie Honeyball'un tarihe geçen hikayesi.",
+        url: "https://www.femsport.net/kadin-futbolunun-kurucusu-nettie-honeyball/",
+        note: "FemSport, kadın sporu ve sporculara odaklanan bağımsız bir yayın platformu."
+    },
+    femsport3: {
+        source: "FemSport",
+        title: "İlona Elek: Engelleri Aşan Şampiyonun Hikayesi",
+        desc: "Macar eskrimci İlona Elek'in tarihe geçen kariyeri ve zorlu koşullara rağmen elde ettiği zaferler.",
+        url: "https://www.femsport.net/ilona-elek-engelleri-asan-sampiyonun-hikayesi/",
+        note: "FemSport, kadın sporu ve sporculara odaklanan bağımsız bir yayın platformu."
+    },
+    femsport4: {
+        source: "FemSport",
+        title: "Gertrude Ederle: Dalgaların Kraliçesi",
+        desc: "Manş Denizi'ni geçen ilk kadın olarak tarihe geçen Gertrude Ederle'nin efsanevi hikayesi.",
+        url: "https://www.femsport.net/gertrude-ederle-dalgalarin-kralicesi/",
+        note: "FemSport, kadın sporu ve sporculara odaklanan bağımsız bir yayın platformu."
+    },
+    femsport5: {
+        source: "FemSport",
+        title: "Viktorya Döneminin Asi Kızı: Charlotte Cooper",
+        desc: "Olimpiyat tarihinin ilk kadın şampiyonu unvanını kazanan tenisçi Charlotte Cooper'ın Viktorya dönemindeki mücadelesi.",
+        url: "https://www.femsport.net/viktorya-doneminin-asi-kizi-charlotte-cooper/",
+        note: "FemSport, kadın sporu ve sporculara odaklanan bağımsız bir yayın platformu."
+    }
+};
+
+function openArticle(id) {
+    const a = articles[id];
+    document.getElementById('article-content').innerHTML = `
+        <div class="article-header">
+            <div class="source-badge">${a.source}</div>
+            <h1>${a.title}</h1>
+            <p class="desc">${a.desc}</p>
+            <a class="read-link" href="${a.url}" target="_blank">Haberi Oku →</a>
+        </div>
+        <div class="article-note">
+            <div class="note-label">Yayın Hakkında</div>
+            <div class="note-text">${a.note}</div>
+        </div>
+    `;
+    document.getElementById('list-view').classList.remove('active');
+    document.getElementById('article-view').classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+function goBack() {
+    document.getElementById('article-view').classList.remove('active');
+    document.getElementById('list-view').classList.add('active');
+    window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
