@@ -30,7 +30,6 @@ body{
   border:12px solid var(--ink);
 }
 
-/* SIDEBAR RAIL */
 .rail{
   width:72px;
   background:var(--ink);
@@ -53,7 +52,6 @@ body{
   opacity:0.7;
 }
 
-/* MAIN */
 .main{
   flex:1;
   display:flex;
@@ -74,7 +72,6 @@ body{
   color:var(--ink);
 }
 
-/* HEADER */
 header{
   padding:3rem 4rem 5rem;
   border-bottom:2px solid var(--ink);
@@ -146,45 +143,6 @@ h1 em{
   opacity:0.85;
 }
 
-.header-actions{
-  margin-top:3rem;
-  display:flex;
-  gap:1.2rem;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-.btn-primary{
-  padding:0.85rem 2rem;
-  background:var(--ink);
-  color:var(--bg);
-  font-family:"Anton",sans-serif;
-  font-size:12px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  border:none;
-  cursor:pointer;
-  display:flex;align-items:center;gap:0.6rem;
-  transition:background 0.2s;
-}
-.btn-primary:hover{background:var(--accent)}
-.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-
-.btn-outline{
-  padding:0.85rem 2rem;
-  background:transparent;
-  color:var(--ink);
-  font-family:"Anton",sans-serif;
-  font-size:12px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  border:2px solid var(--ink);
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.btn-outline:hover{background:var(--ink);color:var(--bg)}
-
-/* CONTENT GRID */
 .content-grid{
   flex:1;
   display:grid;
@@ -192,7 +150,6 @@ h1 em{
   overflow:auto;
 }
 
-/* LEFT PANEL */
 .left-panel{
   border-right:2px solid var(--ink);
   padding:3rem 3.5rem;
@@ -253,14 +210,12 @@ h1 em{
 }
 .section-btn.active .chevron{transform:rotate(90deg)}
 
-/* RIGHT PANEL */
 .right-panel{
   padding:3rem 3.5rem;
   background:rgba(255,255,255,0.3);
   overflow-y:auto;
 }
 
-/* SECTION DETAIL */
 .section-detail{display:none}
 .section-detail.visible{display:block}
 
@@ -283,15 +238,18 @@ h1 em{
   margin-bottom:1.5rem;
 }
 .section-content-text{
-  font-size:1.35rem;
+  font-size:1.1rem;
   font-style:italic;
-  line-height:1.7;
+  line-height:1.75;
   color:rgba(26,26,26,0.82);
   border-left:6px solid var(--accent);
   padding-left:1.5rem;
   padding-top:0.5rem;
   padding-bottom:0.5rem;
   margin-bottom:1.5rem;
+}
+.section-content-text p{
+  margin-bottom:0.9rem;
 }
 .concepts{
   display:flex;flex-wrap:wrap;gap:0.5rem;
@@ -320,7 +278,6 @@ h1 em{
 }
 .back-btn:hover{color:var(--accent);border-color:var(--accent)}
 
-/* ESSAY VIEW */
 .essay-view{display:none}
 .essay-view.visible{display:block}
 .essay-para{
@@ -359,199 +316,12 @@ h1 em{
   line-height:1.6;
 }
 
-/* SPEECH indicator */
-.speech-wave{
-  display:inline-flex;align-items:flex-end;gap:2px;height:18px;
-}
-.speech-wave span{
-  display:inline-block;width:3px;background:currentColor;border-radius:2px;
-  animation:wave 0.8s ease-in-out infinite;
-}
-.speech-wave span:nth-child(2){animation-delay:0.15s}
-.speech-wave span:nth-child(3){animation-delay:0.3s}
-@keyframes wave{0%,100%{height:4px}50%{height:16px}}
-
-/* CHAT OVERLAY */
-#chat-overlay{
-  position:fixed;inset:0;
-  background:rgba(26,26,26,0.82);
-  backdrop-filter:blur(6px);
-  z-index:40;
-  display:none;
-}
-#chat-overlay.open{display:block}
-
-#chat-panel{
-  position:fixed;
-  right:0;top:0;bottom:0;
-  width:min(480px,100vw);
-  background:var(--bg);
-  border-left:12px solid var(--ink);
-  z-index:50;
-  display:flex;
-  flex-direction:column;
-  transform:translateX(100%);
-  transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-#chat-panel.open{transform:translateX(0)}
-
-.chat-header{
-  padding:2.5rem;
-  border-bottom:2px solid var(--ink);
-  display:flex;justify-content:space-between;align-items:flex-start;
-}
-.chat-header h3{
-  font-family:"Anton",sans-serif;
-  font-size:2.4rem;
-  line-height:0.95;
-  text-transform:uppercase;
-}
-.chat-close{
-  background:var(--ink);
-  color:var(--bg);
-  border:none;
-  width:40px;height:40px;
-  cursor:pointer;
-  font-size:1.2rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
-  flex-shrink:0;
-}
-.chat-close:hover{background:var(--accent)}
-
-.chat-messages{
-  flex:1;
-  overflow-y:auto;
-  padding:2rem;
-  display:flex;
-  flex-direction:column;
-  gap:1.5rem;
-}
-
-.chat-empty{
-  border:2px dashed var(--ink);
-  padding:2.5rem;
-  text-align:center;
-  margin-top:2rem;
-}
-.chat-empty p{
-  font-style:italic;
-  color:var(--muted);
-  font-size:1rem;
-  line-height:1.6;
-}
-.chat-empty svg{
-  width:40px;height:40px;
-  color:var(--accent);
-  margin:0 auto 1rem;
-  display:block;
-}
-
-.chat-msg{
-  display:flex;
-  animation:slideIn 0.3s ease;
-}
-@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.chat-msg.user{justify-content:flex-end}
-.chat-msg.assistant{justify-content:flex-start}
-
-.chat-bubble{
-  max-width:88%;
-  padding:1.2rem 1.5rem;
-  box-shadow:6px 6px 0 var(--ink);
-}
-.chat-msg.user .chat-bubble{background:var(--ink);color:var(--bg)}
-.chat-msg.assistant .chat-bubble{background:white;border:2px solid var(--ink)}
-
-.bubble-label{
-  font-family:"Inter",sans-serif;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  opacity:0.45;
-  margin-bottom:0.5rem;
-  display:block;
-}
-.bubble-text{
-  font-style:italic;
-  font-size:1rem;
-  line-height:1.6;
-}
-
-.typing-indicator{
-  display:flex;
-  gap:4px;
-  padding:1rem 1.5rem;
-  background:white;
-  border:2px solid var(--ink);
-  width:fit-content;
-  box-shadow:6px 6px 0 var(--ink);
-}
-.typing-dot{
-  width:6px;height:6px;
-  border-radius:50%;
-  background:var(--accent);
-  animation:typingBounce 0.8s ease-in-out infinite;
-}
-.typing-dot:nth-child(2){animation-delay:0.2s}
-.typing-dot:nth-child(3){animation-delay:0.4s}
-@keyframes typingBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-.chat-input-area{
-  padding:1.5rem 2rem;
-  border-top:2px solid var(--ink);
-  background:rgba(255,255,255,0.5);
-}
-.chat-input-wrap{
-  position:relative;
-}
-#chat-input{
-  width:100%;
-  border:3px solid var(--ink);
-  background:white;
-  padding:1rem 3.5rem 1rem 1.2rem;
-  font-family:"Anton",sans-serif;
-  font-size:13px;
-  letter-spacing:0.06em;
-  outline:none;
-  transition:border-color 0.2s;
-}
-#chat-input:focus{border-color:var(--accent)}
-#chat-send{
-  position:absolute;
-  right:8px;top:50%;
-  transform:translateY(-50%);
-  background:var(--ink);
-  color:var(--bg);
-  border:none;
-  width:34px;height:34px;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
-}
-#chat-send:hover{background:var(--accent)}
-
-/* LOADING indicator */
-.loading-msg{
-  display:none;
-  text-align:center;
-  padding:1rem;
-  font-family:"Inter",sans-serif;
-  font-size:11px;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* Responsive */
 @media(max-width:900px){
   .rail{display:none}
   .content-grid{grid-template-columns:1fr}
   .left-panel{border-right:none;border-bottom:2px solid var(--ink)}
   .accent-box{display:none}
   header{padding:2rem 1.5rem 3rem}
-  .header-actions{gap:0.8rem}
   .left-panel,.right-panel{padding:2rem 1.5rem}
   h1{font-size:clamp(3rem,12vw,5rem)}
 }
@@ -560,18 +330,15 @@ h1 em{
 <body>
 
 <div class="app">
-  <!-- RAIL -->
   <div class="rail">
     <span class="rail-text">ESTETİK DEVRİM // 1974</span>
     <span class="rail-text">VEDAT TÜRKALİ</span>
     <span class="rail-text">LİTERATÜR ELEŞTİRİ</span>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="bg-watermark">SANSÜR</div>
 
-    <!-- HEADER -->
     <header>
       <span class="eyebrow">BİR İNCELEME</span>
       <h1>VEDAT TÜRKALİ<br/><em>Bir Gün Tek Başına</em></h1>
@@ -581,24 +348,16 @@ h1 em{
         <h3>İÇ<br/>KARAKOL</h3>
         <p>Fanon'dan Foucault'ya, bireyin kendi zihnindeki sessiz mahkûmiyeti.</p>
       </div>
-
-      <div class="header-actions">
-        <button class="btn-primary" onclick="openChat()">ELEŞTİRMENE SOR</button>
-      </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="content-grid">
       <div class="left-panel">
         <p class="big-quote">Kenan romanın sonunda hâlâ o odada, kendi hapishanesinde. Türkali ise yetmiş iki yıl boyunca yazarak o odadan çıkmayı başarmış.</p>
 
-        <div class="sections-list" id="sections-list">
-          <!-- filled by JS -->
-        </div>
+        <div class="sections-list" id="sections-list"></div>
       </div>
 
       <div class="right-panel" id="right-panel">
-        <!-- Essay view (default) -->
         <div class="essay-view visible" id="essay-view">
           <div id="essay-content"></div>
           <div class="essay-quote-box">
@@ -607,7 +366,6 @@ h1 em{
           </div>
         </div>
 
-        <!-- Section detail view -->
         <div class="section-detail" id="section-detail">
           <span class="section-eyebrow" id="detail-eyebrow"></span>
           <h2 id="detail-title"></h2>
@@ -620,37 +378,7 @@ h1 em{
   </div>
 </div>
 
-<!-- CHAT OVERLAY -->
-<div id="chat-overlay" onclick="closeChat()"></div>
-
-<div id="chat-panel">
-  <div class="chat-header">
-    <div>
-      <h3>ELEŞTİRMEN<br/>SOHBETİ</h3>
-      <span class="eyebrow" style="margin-top:0.5rem;margin-bottom:0">UZMAN GÖRÜŞÜ // AI</span>
-    </div>
-    <button class="chat-close" onclick="closeChat()">✕</button>
-  </div>
-
-  <div class="chat-messages" id="chat-messages">
-    <div class="chat-empty" id="chat-empty">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <p>"Bir Gün Tek Başına"nın estetik devrimi hakkında bir soruyla diyalogu başlatın.</p>
-    </div>
-  </div>
-
-  <div class="chat-input-area">
-    <div class="chat-input-wrap">
-      <input type="text" id="chat-input" placeholder="SORUNUZU BURAYA YAZIN..." onkeydown="if(event.key==='Enter')sendChat()"/>
-      <button id="chat-send" onclick="sendChat()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
 const ESSAY = `Bugün, "toplumcu gerçekçilik" deyince ne anlıyoruz? Büyük ihtimalle şunu anlıyoruz: işçi sınıfını anlatan, iyiyi kötüden ayıran, sonunda zulüm hep yenilir diye biten bir roman şablonu. Bu şablon o kadar yerleşmiş ki kavramın kendisi artık bir içeriği değil, bir kalıbı çağrıştırıyor. Eleştirmenler, özellikle biçimci olanlar, bu noktada haklı bir şey söylüyor: "toplumcu gerçekçilik" etiketi gerçekten de bir şemsiyeye dönüşmüş.
 
 Kavram büyüdükçe anlamsızlaşıyor; kapsadığı her şeyi aynı anda hem içine alıyor hem de yok sayıyor. Bu anlamsızlaşma ise bir tanımsal muğlaklık yaratıyor ve eleştirmenlerin işine gelen boş bir gösterene dönüşüyor: siyasi roman, dönem romanı, komünist yazar deniyor ve kitap okunmadan rafa kaldırılıyor.
@@ -660,15 +388,38 @@ Vedat Türkali de bu indirgemeci şemsiyenin altına yerleştiriliyor zaman zama
 Çünkü o ezberlediğimiz "ideal devrimci" arketipiyle bu romanın kahramanı Kenan arasında dağlar kadar fark var. Bu fark sadece siyasi bir ayrım da değil; aslında Joseph Campbell'ın Kahramanın Sonsuz Yolculuğu olarak tanımladığı o kadim mitolojik döngü bile Türkali'nin elinde tersyüz ediliyor. Kenan; kararsızlığın, korkunun, içsel çatışmaların öznesi. Yine o bildiğimiz şablonlar hep bir ağızdan "zafer" ve "umut" diye bağırarak biter; oysa Türkali'nin romanı bizi bireysel bir yalnızlık ve zifiri bir belirsizlikle baş başa bırakır.`;
 
 const SECTIONS = [
-  { title:"Şemsiye ve Şablon", content:"Toplumcu gerçekçilik kavramının nasıl bir indirgemeci şemsiyeye dönüştüğü ve Türkali'nin bu şablonları nasıl parçaladığı.", concepts:["Toplumcu Gerçekçilik","İndirgemecilik","Estetik Devrim"] },
-  { title:"Mitolojik Tersyüz Etme", content:"Joseph Campbell'ın 'Kahramanın Sonsuz Yolculuğu' modelinin Kenan karakteri üzerinden nasıl tersine çevrildiği.", concepts:["Joseph Campbell","Mistik Evlilik","Erginleşme"] },
-  { title:"Aşk ve Etik Laboratuvar", content:"Romanın aşk izleğinin Orhan Pamuk ile karşılaştırılması ve aşkın bir eylem alanı olarak kurgulanışı.", concepts:["Orhan Pamuk","Masumiyet Müzesi","Fethi Naci"] },
-  { title:"İktidarın İç Karakolları", content:"Frantz Fanon, Michel Foucault ve Kafka ekseninde iktidarın bireyin ruhuna nasıl sızdığı.", concepts:["Frantz Fanon","Michel Foucault","Kafka","Panoptikon"] },
-  { title:"Görsel Estetik ve Yeşilçam", content:"Türkali'nin sinemacı kimliğinin romana etkisi ve görüntünün susturulmuş bir aydın için stratejik önemi.", concepts:["Yılmaz Güney","Yeşilçam","Sinematik İmge"] },
-  { title:"Direniş ve Etimoloji", content:"Sansür ve direniş kelimelerinin kökeninden hareketle Türkali'nin 'yerinde sağlamca durma' eylemi.", concepts:["Etimoloji","Censura","Resistere"] }
+  {
+    title: "Şemsiye ve Şablon",
+    content: '"Toplumcu gerçekçilik" kavramı zaman içinde öylesine şişmiş bir şemsiyeye dönüşmüştür ki artık bir içeriği değil, yalnızca bir kalıbı çağrıştırır. İşçi sınıfını anlatan, iyiyi kötüden ayıran, sonunda zulüm yenilir diye biten roman şablonu — bu formül öylesine yerleşmiştir ki eleştirmenler kitabı okumadan rafa kaldırabilir hale gelmiştir.\n\nVedat Türkali de bu şemsiyenin altına yerleştirilmeye çalışılmıştır. Oysa Bir Gün Tek Başına bu kalıba sığmaz: romanın kahramanı Kenan ideal devrimci arketipinin tam tersini temsil eder — kararsız, korkulu, içsel çatışmalarla dolu bir figürdür. Türkali bu tercihteki cesaretini estetik bir devrime dönüştürür.',
+    concepts: ["Toplumcu Gerçekçilik","İndirgemecilik","Estetik Devrim","Boş Gösteren"]
+  },
+  {
+    title: "Mitolojik Tersyüz Etme",
+    content: "Joseph Campbell'ın Kahramanın Sonsuz Yolculuğu modeli evrensel bir arketip önerir: erginleşme, sınav, zafer. Klasik devrimci roman da bu yapıyı siyasi bir kılıfa büründürür ve kahramanı zafere taşır.\n\nTürkali bu şemayı tersine çevirir. Kenan romanın sonunda ne zafer kazanmış ne de dönüşüm geçirmiştir; hâlâ aynı odada, kendi zihinsel hapishanesindedir. Bu tamamlanmamış yolculuk bilinçli bir estetik tercihtir — varoluşsal belirsizliği kolay kapanışlarla örtmek yerine okuyucunun yüzüne dürüstçe tutmaktır.",
+    concepts: ["Joseph Campbell","Kahraman Yolculuğu","Arketip","Tersyüz Etme"]
+  },
+  {
+    title: "Aşk ve Etik Laboratuvar",
+    content: "Romanın aşk izleği yüzeysel bir duygusal dolgu değildir; aksine karakterin etik sınavının gerçekleştiği bir laboratuvardır. Bu bağlamda Orhan Pamuk'un Masumiyet Müzesi'yle kıyaslama verimlidir: Pamuk'ta aşk bir obsesyon ve müzeye dönüşen kayıp nesnesidir; Türkali'de ise aşk, siyasi eylemle ve varoluşsal tercihle iç içe geçen, bireyin kim olduğunu sınayan bir alandır.\n\nFethi Naci'nin Türkali okumaları da bu noktayı teyit eder: romanda duygu asla ideolojinin süsü değil, ideolojinin kendisini sorgulatan bir güçtür.",
+    concepts: ["Orhan Pamuk","Masumiyet Müzesi","Fethi Naci","Aşk ve Etik"]
+  },
+  {
+    title: "İktidarın İç Karakolları",
+    content: "Frantz Fanon'un sömürgeci psikoloji analizinde bireyin kendi zihnine içselleştirdiği iktidar yapıları merkezi bir yer tutar. Foucault'nun Panoptikon metaforu da bunu tamamlar: gözetleyenin fiziksel varlığı gerekmez; birey kendi gözlemcisine dönüştüğünde iktidar en verimli biçimine kavuşur.\n\nKafka'nın labirent bürokratik atmosferiyle birlikte düşünüldüğünde Kenan'ın içinde bulunduğu hal netleşir: dışarıdaki sansür ve baskı, çoktan bir iç karakola dönüşmüştür. Türkali bu psikolojik gerçeği, dönemin Türk edebiyatında ender rastlanan bir derinlikle işler.",
+    concepts: ["Frantz Fanon","Michel Foucault","Kafka","Panoptikon","İç Karakol"]
+  },
+  {
+    title: "Görsel Estetik ve Yeşilçam",
+    content: "Türkali yalnızca romancı değil, aynı zamanda önemli bir senaryo yazarıdır. Yılmaz Güney başta olmak üzere Yeşilçam'ın toplumsal gerçekçi damarına katkıları, onun görsel düşünme biçimini derinleştirmiştir.\n\nBir Gün Tek Başına'da bu sinematik kimlik kendini gösterir: sahneler kurgulanır gibi değil, çerçevelenir gibi yazılmıştır. Görüntü susturulmuş bir aydın için sessiz bir direniş aracı işlevi görür — söylenemeyeni imgeler söyler. Bu, romanı yalnızca bir edebi metin değil, aynı zamanda görsel bir estetik manifesto yapar.",
+    concepts: ["Yılmaz Güney","Yeşilçam","Sinematik İmge","Görsel Estetik"]
+  },
+  {
+    title: "Direniş ve Etimoloji",
+    content: "Latince 'censura' sözcüğü değerlendirme ve yargılama anlamına gelirken 'resistere' yerinde sağlamca durma, geri itmek anlamını taşır. Bu etimolojik köklere dönmek, Türkali'nin tutumunu anlamlandırmak için verimli bir yoldur.\n\nYetmiş iki yıllık yazı hayatı boyunca Türkali, sansürün görünmez duvarlarına direndi — ama bu direniş yüksek sesli bir isyan değil, sayfaya kelime kelime sağlamca yerleşme biçiminde tezahür etti. Kenan romanın sonunda o odada kalmıştır; Türkali ise yazarak o odadan çıkmayı başarmıştır. Direniş burada, dili yaşatmakta gizlidir.",
+    concepts: ["Etimoloji","Censura","Resistere","Sansür","Direniş"]
+  }
 ];
 
-// ─── ESSAY RENDER ───────────────────────────────────────────────────────────
 const essayDiv = document.getElementById('essay-content');
 ESSAY.split('\n\n').forEach(para => {
   const p = document.createElement('p');
@@ -677,7 +428,6 @@ ESSAY.split('\n\n').forEach(para => {
   essayDiv.appendChild(p);
 });
 
-// ─── SECTIONS RENDER ────────────────────────────────────────────────────────
 const list = document.getElementById('sections-list');
 let activeIdx = null;
 
@@ -697,9 +447,7 @@ SECTIONS.forEach((s, idx) => {
 });
 
 function selectSection(idx) {
-  // deactivate all
   SECTIONS.forEach((_,i) => document.getElementById(`sec-btn-${i}`).classList.remove('active'));
-  
   if(activeIdx === idx) { clearSection(); return; }
   activeIdx = idx;
   document.getElementById(`sec-btn-${idx}`).classList.add('active');
@@ -707,8 +455,15 @@ function selectSection(idx) {
   const s = SECTIONS[idx];
   document.getElementById('detail-eyebrow').textContent = `DERİNLEMESİNE BAKIŞ // 0${idx+1}`;
   document.getElementById('detail-title').textContent = s.title;
-  document.getElementById('detail-content').textContent = s.content;
-  
+
+  const contentEl = document.getElementById('detail-content');
+  contentEl.innerHTML = '';
+  s.content.split('\n\n').forEach(para => {
+    const p = document.createElement('p');
+    p.textContent = para;
+    contentEl.appendChild(p);
+  });
+
   const conceptsEl = document.getElementById('detail-concepts');
   conceptsEl.innerHTML = '';
   s.concepts.forEach(c => {
@@ -728,98 +483,6 @@ function clearSection() {
   document.getElementById('section-detail').classList.remove('visible');
   document.getElementById('essay-view').classList.add('visible');
 }
-
-// ─── CHAT ───────────────────────────────────────────────────────────────────
-function openChat() {
-  document.getElementById('chat-overlay').classList.add('open');
-  document.getElementById('chat-panel').classList.add('open');
-  setTimeout(() => document.getElementById('chat-input').focus(), 400);
-}
-
-function closeChat() {
-  document.getElementById('chat-overlay').classList.remove('open');
-  document.getElementById('chat-panel').classList.remove('open');
-}
-
-const chatMessages = [];
-
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const question = input.value.trim();
-  if(!question) return;
-  input.value = '';
-
-  // hide empty state
-  document.getElementById('chat-empty').style.display = 'none';
-
-  // add user message
-  appendMessage('user', question);
-  chatMessages.push({ role:'user', content: question });
-
-  // show typing
-  const typingEl = document.createElement('div');
-  typingEl.className = 'typing-indicator';
-  typingEl.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-  document.getElementById('chat-messages').appendChild(typingEl);
-  scrollChat();
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:`Sen Türk edebiyatında, özellikle Vedat Türkali'nin eserlerinde uzmanlaşmış sofistike bir edebi eleştirmensin. 
-"Bir Gün Tek Başına" üzerine derin bir analitik deneme okudun. 
-Deneme şu temaları ele alıyor: Fanon'un "iç karakol" kavramı, Foucault'nun Panoptikon'u, Campbell'ın Kahraman Yolculuğu'nun tersyüz edilmesi, Orhan Pamuk ve Kafka ile karşılaştırmalar.
-Türk edebiyatı bağlamında soruları yanıtla. Üslubun akademik, içgörülü ve hafif şiirsel olsun. Türkçe yanıtla. Yanıtların kapsamlı ama odaklı olsun — 150-250 kelime arası.`,
-        messages: chatMessages
-      })
-    });
-    
-    const data = await response.json();
-    const reply = data.content?.[0]?.text || 'Üzgünüm, şu an yanıt veremiyorum.';
-    
-    typingEl.remove();
-    appendMessage('assistant', reply);
-    chatMessages.push({ role:'assistant', content: reply });
-  } catch(err) {
-    typingEl.remove();
-    appendMessage('assistant', 'Bağlantı hatası. Lütfen tekrar deneyin.');
-    console.error(err);
-  }
-}
-
-function appendMessage(role, content) {
-  const wrap = document.createElement('div');
-  wrap.className = `chat-msg ${role}`;
-  
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-bubble';
-  
-  const label = document.createElement('span');
-  label.className = 'bubble-label';
-  label.textContent = role === 'user' ? 'SORU' : 'ELEŞTİRMEN';
-  
-  const text = document.createElement('p');
-  text.className = 'bubble-text';
-  text.textContent = content;
-  
-  bubble.appendChild(label);
-  bubble.appendChild(text);
-  wrap.appendChild(bubble);
-  document.getElementById('chat-messages').appendChild(wrap);
-  scrollChat();
-}
-
-function scrollChat() {
-  const el = document.getElementById('chat-messages');
-  el.scrollTop = el.scrollHeight;
-}
-
-// load voices for TTS
-if('speechSynthesis' in window) window.speechSynthesis.getVoices();
 </script>
 </body>
 </html>
