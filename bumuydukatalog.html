@@ -7,7 +7,6 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;font-family:'Georgia',serif;}
-
 body{
   background:
     radial-gradient(ellipse 60% 50% at 50% 0%, #1a3a2a 0%, transparent 60%),
@@ -16,332 +15,108 @@ body{
     radial-gradient(ellipse 50% 30% at 50% 100%, #0a1f12 0%, transparent 50%),
     #071209;
 }
-
-/* noise grain */
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   opacity:0.4;
 }
-
-/* ── TOP BAR ── */
 .topbar{
   position:fixed;top:0;left:0;right:0;height:52px;z-index:100;
-  background:rgba(0,0,0,0.85);
-  border-bottom:2px solid #C9A84C;
+  background:rgba(0,0,0,0.85);border-bottom:2px solid #C9A84C;
   display:flex;align-items:center;justify-content:space-between;padding:0 24px;
   backdrop-filter:blur(8px);
 }
-.topbar-logo{
-  font-family:'Georgia',serif;font-style:italic;font-size:24px;
-  color:#fff;letter-spacing:1px;
-  text-shadow: 0 0 20px rgba(201,168,76,0.6);
-}
+.topbar-logo{font-family:'Georgia',serif;font-style:italic;font-size:24px;color:#fff;letter-spacing:1px;text-shadow:0 0 20px rgba(201,168,76,0.6);}
 .topbar-logo span{color:#C9A84C;font-style:normal;font-weight:bold;}
-.page-indicator{
-  font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:3px;
-  font-family:monospace;
-  background:rgba(201,168,76,0.1);
-  border:1px solid rgba(201,168,76,0.4);
-  padding:4px 12px;border-radius:20px;
-}
+.page-indicator{font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:3px;font-family:monospace;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.4);padding:4px 12px;border-radius:20px;}
+.scene{position:fixed;inset:0;top:52px;display:flex;align-items:center;justify-content:center;perspective:2000px;z-index:2;}
+.book-wrap{position:relative;width:min(780px,90vw);height:min(calc(90vh - 52px),780px);transform-style:preserve-3d;filter:drop-shadow(0 30px 60px rgba(0,0,0,0.8));}
+.spine{position:absolute;left:50%;top:3%;bottom:3%;width:16px;margin-left:-8px;background:linear-gradient(to right,#1a0f00,#C9A84C,#1a0f00);z-index:10;box-shadow:0 0 30px rgba(201,168,76,0.5);}
 
-/* ── BOOK CONTAINER ── */
-.scene{
-  position:fixed;inset:0;top:52px;
-  display:flex;align-items:center;justify-content:center;
-  perspective:2000px;
-  z-index:2;
-}
+/* Sayfa: gerçek 3D kart yapısı */
+.page{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;cursor:pointer;}
+.page.left-side{left:0;transform-origin:right center;border-radius:6px 0 0 6px;}
+.page.right-side{left:50%;transform-origin:left center;border-radius:0 6px 6px 0;}
 
-.book-wrap{
-  position:relative;
-  width:min(780px, 90vw);
-  height:min(calc(90vh - 52px), 780px);
-  transform-style:preserve-3d;
-  filter:drop-shadow(0 30px 60px rgba(0,0,0,0.8));
-}
+/* Front ve back — backface-visibility doğru katmanda */
+.page-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;}
+.page-face.front{transform:rotateY(0deg);}
+.page-face.back{transform:rotateY(180deg);}
+.page-face img{width:100%;height:100%;object-fit:cover;display:block;}
 
-/* ── SPINE ── */
-.spine{
-  position:absolute;
-  left:50%;top:3%;bottom:3%;
-  width:16px;margin-left:-8px;
-  background:linear-gradient(to right,#1a0f00,#C9A84C,#1a0f00);
-  z-index:10;
-  box-shadow:0 0 30px rgba(201,168,76,0.5);
-}
+.page.left-side .page-face::after{content:'';position:absolute;top:0;right:0;bottom:0;width:40px;background:linear-gradient(to left,rgba(0,0,0,0.5),transparent);pointer-events:none;}
+.page.right-side .page-face::after{content:'';position:absolute;top:0;left:0;bottom:0;width:40px;background:linear-gradient(to right,rgba(0,0,0,0.5),transparent);pointer-events:none;}
 
-/* ── PAGE BASE ── */
-.page{
-  position:absolute;top:0;bottom:0;
-  width:50%;
-  overflow:hidden;
-  transform-style:preserve-3d;
-  transition:transform 0.7s cubic-bezier(0.645,0.045,0.355,1.0), box-shadow 0.4s;
-  cursor:pointer;
-}
-.page.left-side{
-  left:0;
-  transform-origin:right center;
-  border-radius:6px 0 0 6px;
-}
-.page.right-side{
-  left:50%;
-  transform-origin:left center;
-  border-radius:0 6px 6px 0;
-}
+.page.left-side{transition:transform 0.75s cubic-bezier(0.4,0,0.2,1);}
+.page.right-side{transition:transform 0.75s cubic-bezier(0.4,0,0.2,1);}
+.page.flipping{z-index:30;}
 
-.page img{
-  width:100%;height:100%;
-  object-fit:cover;display:block;
-  pointer-events:none;
-  backface-visibility:hidden;
-}
-
-.page.left-side::after{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:40px;
-  background:linear-gradient(to left,rgba(0,0,0,0.5),transparent);
-  pointer-events:none;z-index:5;
-}
-.page.right-side::after{
-  content:'';position:absolute;top:0;left:0;bottom:0;width:40px;
-  background:linear-gradient(to right,rgba(0,0,0,0.5),transparent);
-  pointer-events:none;z-index:5;
-}
-
-/* ── FLIPPING ── */
-.page.flipping-left{
-  animation:flipLeft 0.7s cubic-bezier(0.645,0.045,0.355,1.0) forwards;
-  z-index:30;
-}
-.page.flipping-right{
-  animation:flipRight 0.7s cubic-bezier(0.645,0.045,0.355,1.0) forwards;
-  z-index:30;
-}
-
-@keyframes flipLeft{
-  0%{transform:rotateY(0deg);}
-  50%{box-shadow:-40px 0 80px rgba(201,168,76,0.4);}
-  100%{transform:rotateY(-180deg);}
-}
-@keyframes flipRight{
-  0%{transform:rotateY(0deg);}
-  50%{box-shadow:40px 0 80px rgba(201,168,76,0.4);}
-  100%{transform:rotateY(180deg);}
-}
-
-.page .page-back{
-  position:absolute;inset:0;
-  transform:rotateY(180deg);
-  backface-visibility:hidden;
-  overflow:hidden;
-}
-.page .page-back img{width:100%;height:100%;object-fit:cover;display:block;}
-.page .page-front{
-  position:absolute;inset:0;
-  backface-visibility:hidden;
-  overflow:hidden;
-}
-.page .page-front img{width:100%;height:100%;object-fit:cover;display:block;}
-
-/* ── EMPTY / BACK COVER PAGE ── */
-.empty-page{
-  width:100%;height:100%;
-  background:#071209;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:20px;
-  position:relative;
-  overflow:hidden;
-}
-.empty-page::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 30%, rgba(201,168,76,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 20% 80%, rgba(15,60,30,0.5) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(10,40,20,0.4) 0%, transparent 50%);
-}
-.empty-page-logo{
-  font-family:'Georgia',serif;font-style:italic;
-  font-size:clamp(32px,5vw,64px);
-  color:#f5e6c0;
-  text-align:center;line-height:1.1;
-  position:relative;z-index:1;
-  text-shadow:0 0 40px rgba(201,168,76,0.7), 0 0 80px rgba(201,168,76,0.3);
-}
+.empty-page{width:100%;height:100%;background:#071209;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;position:relative;overflow:hidden;}
+.empty-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 30%,rgba(201,168,76,0.12) 0%,transparent 60%);}
+.empty-page-logo{font-family:'Georgia',serif;font-style:italic;font-size:clamp(32px,5vw,64px);color:#f5e6c0;text-align:center;line-height:1.1;position:relative;z-index:1;text-shadow:0 0 40px rgba(201,168,76,0.7);}
 .empty-page-logo span{color:#C9A84C;font-style:normal;}
 
-/* last page extra content */
-.last-page{
-  width:100%;height:100%;
-  background:#071209;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:24px;
-  position:relative;
-  overflow:hidden;
-  padding:40px;
-}
-.last-page::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 100% 60% at 50% 0%, rgba(201,168,76,0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 60% at 0% 100%, rgba(10,40,20,0.6) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 100% 60%, rgba(15,50,25,0.4) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 50%);
-}
-.last-page-title{
-  font-family:'Georgia',serif;font-style:italic;
-  font-size:clamp(36px,6vw,72px);
-  color:#f5e6c0;
-  text-align:center;line-height:1;
-  position:relative;z-index:1;
-  text-shadow:0 0 40px rgba(201,168,76,0.8), 0 0 80px rgba(201,168,76,0.4);
-}
+.last-page{width:100%;height:100%;background:#071209;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;position:relative;overflow:hidden;padding:40px;}
+.last-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(201,168,76,0.15) 0%,transparent 55%);}
+.last-page-title{font-family:'Georgia',serif;font-style:italic;font-size:clamp(36px,6vw,72px);color:#f5e6c0;text-align:center;line-height:1;position:relative;z-index:1;text-shadow:0 0 40px rgba(201,168,76,0.8);}
 .last-page-title span{color:#C9A84C;font-style:normal;}
-.last-page-issue{
-  font-family:monospace;font-size:12px;letter-spacing:4px;
-  color:rgba(245,230,192,0.4);text-transform:uppercase;
-  position:relative;z-index:1;
-}
-.last-page-divider{
-  width:60px;height:2px;
-  background:linear-gradient(to right,#1a3a2a,#C9A84C,#1a3a2a);
-  position:relative;z-index:1;
-}
-.last-page-tags{
-  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
-  position:relative;z-index:1;max-width:280px;
-}
-.last-page-tag{
-  font-family:monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  padding:4px 10px;border:1px solid;border-radius:2px;
-}
+.last-page-issue{font-family:monospace;font-size:12px;letter-spacing:4px;color:rgba(245,230,192,0.4);text-transform:uppercase;position:relative;z-index:1;}
+.last-page-divider{width:60px;height:2px;background:linear-gradient(to right,#1a3a2a,#C9A84C,#1a3a2a);position:relative;z-index:1;}
+.last-page-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;position:relative;z-index:1;max-width:280px;}
+.last-page-tag{font-family:monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid;border-radius:2px;}
 .tag-p{border-color:rgba(201,168,76,0.6);color:#C9A84C;}
 .tag-y{border-color:rgba(245,230,192,0.3);color:rgba(245,230,192,0.6);}
 .tag-g{border-color:rgba(100,180,100,0.4);color:rgba(100,180,100,0.8);}
-.tag-v{border-color:rgba(201,168,76,0.4);color:rgba(201,168,76,0.7);}
-.last-page-sub{
-  font-family:monospace;font-size:10px;letter-spacing:2px;
-  color:rgba(245,230,192,0.25);text-align:center;
-  position:relative;z-index:1;line-height:1.6;
-}
-.last-page-bg-text{
-  position:absolute;
-  font-family:'Georgia',serif;font-style:italic;
-  font-size:clamp(60px,14vw,140px);
-  color:rgba(201,168,76,0.04);
-  white-space:nowrap;
-  user-select:none;pointer-events:none;
-  bottom:10px;left:50%;transform:translateX(-50%);
-  z-index:0;
-}
+.last-page-sub{font-family:monospace;font-size:10px;letter-spacing:2px;color:rgba(245,230,192,0.25);text-align:center;position:relative;z-index:1;line-height:1.6;}
+.last-page-bg-text{position:absolute;font-family:'Georgia',serif;font-style:italic;font-size:clamp(60px,14vw,140px);color:rgba(201,168,76,0.04);white-space:nowrap;user-select:none;pointer-events:none;bottom:10px;left:50%;transform:translateX(-50%);z-index:0;}
 
-/* ── NAV BUTTONS ── */
-.nav-btn{
-  position:fixed;
-  top:50%;transform:translateY(-50%);
-  width:44px;height:80px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(201,168,76,0.4);
-  color:#C9A84C;
-  font-size:30px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  z-index:50;
-  transition:all 0.2s;
-  user-select:none;
-  backdrop-filter:blur(4px);
-}
+.nav-btn{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:80px;background:rgba(0,0,0,0.7);border:1px solid rgba(201,168,76,0.4);color:#C9A84C;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:all 0.2s;user-select:none;backdrop-filter:blur(4px);}
 .nav-btn:hover{background:rgba(201,168,76,0.1);border-color:#C9A84C;box-shadow:0 0 20px rgba(201,168,76,0.2);}
 .nav-btn:active{transform:translateY(-50%) scale(0.95);}
 .nav-prev{left:8px;border-radius:0 4px 4px 0;}
 .nav-next{right:8px;border-radius:4px 0 0 4px;}
 .nav-btn.disabled{opacity:0.15;pointer-events:none;}
 
-/* ── THUMBNAIL STRIP ── */
-.thumbstrip{
-  position:fixed;bottom:0;left:0;right:0;height:72px;z-index:80;
-  background:rgba(0,0,0,0.9);
-  border-top:2px solid rgba(201,168,76,0.2);
-  display:flex;align-items:center;
-  padding:0 56px;
-  gap:6px;
-  overflow-x:auto;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(201,168,76,0.3) transparent;
-  backdrop-filter:blur(8px);
-}
+.thumbstrip{position:fixed;bottom:0;left:0;right:0;height:72px;z-index:80;background:rgba(0,0,0,0.9);border-top:2px solid rgba(201,168,76,0.2);display:flex;align-items:center;padding:0 56px;gap:6px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,0.3) transparent;backdrop-filter:blur(8px);}
 .thumbstrip::-webkit-scrollbar{height:3px;}
 .thumbstrip::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.3);}
-
-.thumb{
-  flex-shrink:0;
-  width:36px;height:52px;
-  border:1.5px solid rgba(255,255,255,0.1);
-  overflow:hidden;cursor:pointer;
-  transition:all 0.2s;
-  position:relative;border-radius:2px;
-}
+.thumb{flex-shrink:0;width:36px;height:52px;border:1.5px solid rgba(255,255,255,0.1);overflow:hidden;cursor:pointer;transition:all 0.2s;position:relative;border-radius:2px;}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.thumb:hover{border-color:rgba(255,45,138,0.7);transform:translateY(-4px) scale(1.05);box-shadow:0 4px 12px rgba(201,168,76,0.2);}
-.thumb.active{border-color:#C9A84C;transform:translateY(-6px) scale(1.08);box-shadow:0 6px 16px rgba(255,45,138,0.5);}
-.thumb-num{
-  position:absolute;bottom:0;left:0;right:0;
-  background:rgba(0,0,0,0.75);
-  font-size:8px;color:rgba(255,255,255,0.6);
-  text-align:center;padding:1px 0;
-  font-family:monospace;
-}
+.thumb:hover{border-color:rgba(201,168,76,0.7);transform:translateY(-4px) scale(1.05);}
+.thumb.active{border-color:#C9A84C;transform:translateY(-6px) scale(1.08);box-shadow:0 6px 16px rgba(201,168,76,0.4);}
+.thumb-num{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);font-size:8px;color:rgba(255,255,255,0.6);text-align:center;padding:1px 0;font-family:monospace;}
 
-/* ── FLIP HINT ── */
-.flip-hint{
-  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,45,138,0.5);
-  font-family:monospace;
-  animation:fadeHint 3s 2s forwards;
-  z-index:60;pointer-events:none;
-  background:rgba(0,0,0,0.5);padding:6px 14px;border-radius:20px;
-  border:1px solid rgba(255,45,138,0.2);
-}
+.flip-hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,0.5);font-family:monospace;animation:fadeHint 3s 2s forwards;z-index:60;pointer-events:none;background:rgba(0,0,0,0.5);padding:6px 14px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);}
 @keyframes fadeHint{0%{opacity:1;}100%{opacity:0;}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="topbar-logo">Bu <span>Muydu?</span></div>
   <div class="page-indicator" id="pg-indicator">Sayfa 1 / 13</div>
 </div>
-
 <button class="nav-btn nav-prev disabled" id="btn-prev" onclick="turnPage(-1)">‹</button>
 <button class="nav-btn nav-next" id="btn-next" onclick="turnPage(1)">›</button>
-
 <div class="scene">
-  <div class="book-wrap" id="bookwrap">
+  <div class="book-wrap">
     <div class="spine"></div>
-
     <div class="page left-side" id="page-left" onclick="turnPage(-1)">
-      <div class="page-front" id="pl-front"></div>
-      <div class="page-back" id="pl-back"></div>
+      <div class="page-face front" id="pl-front"></div>
+      <div class="page-face back"  id="pl-back"></div>
     </div>
-
     <div class="page right-side" id="page-right" onclick="turnPage(1)">
-      <div class="page-front" id="pr-front"></div>
-      <div class="page-back" id="pr-back"></div>
+      <div class="page-face front" id="pr-front"></div>
+      <div class="page-face back"  id="pr-back"></div>
     </div>
   </div>
 </div>
-
 <div class="thumbstrip" id="thumbstrip"></div>
 <div class="flip-hint">← Sayfa çevirmek için tıkla →</div>
 
 <script>
 const TOTAL = 13;
 const imgs = Array.from({length:TOTAL},(_,i)=>`https://bumuydu-creator.github.io/bumuydu.github.io/${i+1}.png`);
-
-let spread = 0;
-let animating = false;
+let spread = 0, animating = false;
 
 const plFront = document.getElementById('pl-front');
 const plBack  = document.getElementById('pl-back');
@@ -353,122 +128,103 @@ const indicator = document.getElementById('pg-indicator');
 const btnPrev   = document.getElementById('btn-prev');
 const btnNext   = document.getElementById('btn-next');
 
-function imgEl(src){
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = src;
-  return img;
+// ── Sayfa Sesi (Web Audio API) ──
+let audioCtx = null;
+function getCtx(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
+
+function playFlip(){
+  try{
+    const ctx = getCtx(), now = ctx.currentTime, dur = 0.18;
+    const buf = ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-(i/d.length),1.5);
+    const src = ctx.createBufferSource(); src.buffer=buf;
+    const bpf = ctx.createBiquadFilter(); bpf.type='bandpass'; bpf.frequency.setValueAtTime(1800,now); bpf.frequency.exponentialRampToValueAtTime(900,now+dur); bpf.Q.value=0.8;
+    const hpf = ctx.createBiquadFilter(); hpf.type='highpass'; hpf.frequency.value=400;
+    const gain = ctx.createGain(); gain.gain.setValueAtTime(0,now); gain.gain.linearRampToValueAtTime(0.35,now+0.015); gain.gain.exponentialRampToValueAtTime(0.001,now+dur);
+    // Çıtırtı
+    const cb = ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.008),ctx.sampleRate);
+    const cd = cb.getChannelData(0); for(let i=0;i<cd.length;i++) cd[i]=(Math.random()*2-1)*0.6*Math.pow(1-(i/cd.length),2);
+    const cs = ctx.createBufferSource(); cs.buffer=cb;
+    const cg = ctx.createGain(); cg.gain.value=0.5;
+    src.connect(bpf); bpf.connect(hpf); hpf.connect(gain); gain.connect(ctx.destination);
+    cs.connect(cg); cg.connect(ctx.destination);
+    src.start(now); src.stop(now+dur); cs.start(now+0.01); cs.stop(now+0.02);
+  }catch(e){}
 }
 
-function emptyEl(){
-  const d = document.createElement('div');
-  d.className='empty-page';
-  d.innerHTML='<div class="empty-page-logo">Bu<br><span>Muydu?</span></div>';
+// ── İçerik Oluşturucular ──
+function imgEl(src){ const i=document.createElement('img'); i.src=src; i.alt=''; return i; }
+function emptyEl(){ const d=document.createElement('div'); d.className='empty-page'; d.innerHTML='<div class="empty-page-logo">Bu<br><span>Muydu?</span></div>'; return d; }
+function lastEl(){
+  const d=document.createElement('div'); d.className='last-page';
+  d.innerHTML=`<div class="last-page-bg-text">Bu Muydu?</div><div class="last-page-issue">Dijital Sayı #14 & #15</div><div class="last-page-title">Bu<br><span>Muydu?</span></div><div class="last-page-divider"></div><div class="last-page-tags"><span class="last-page-tag tag-p">Orhan Pamuk</span><span class="last-page-tag tag-y">Andy Weir</span><span class="last-page-tag tag-g">Vedat Türkali</span><span class="last-page-tag tag-p">Dostoyevski</span><span class="last-page-tag tag-p">Albert Camus</span><span class="last-page-tag tag-y">Campbell</span></div><div class="last-page-sub">Edebiyat · Kültür · Sinema · Felsefe<br>bumuydu.github.io</div>`;
   return d;
 }
+function makeContent(s){ return { left: s===0?emptyEl():imgEl(imgs[s-1]), right: s>=TOTAL?lastEl():imgEl(imgs[s]) }; }
 
-function lastPageEl(){
-  const d = document.createElement('div');
-  d.className='last-page';
-  d.innerHTML=`
-    <div class="last-page-bg-text">Bu Muydu?</div>
-    <div class="last-page-issue">Dijital Sayı #14 & #15</div>
-    <div class="last-page-title">Bu<br><span>Muydu?</span></div>
-    <div class="last-page-divider"></div>
-    <div class="last-page-tags">
-      <span class="last-page-tag tag-p">Orhan Pamuk</span>
-      <span class="last-page-tag tag-y">Andy Weir</span>
-      <span class="last-page-tag tag-g">Vedat Türkali</span>
-      <span class="last-page-tag tag-v">Dostoyevski</span>
-      <span class="last-page-tag tag-p">Albert Camus</span>
-      <span class="last-page-tag tag-y">Campbell</span>
-    </div>
-    <div class="last-page-sub">Edebiyat · Kültür · Sinema · Felsefe<br>bumuydu.github.io</div>
-  `;
-  return d;
-}
-
-function spreadContent(s){
-  return {
-    left:  s === 0      ? emptyEl()      : imgEl(imgs[s-1]),
-    right: s >= TOTAL   ? lastPageEl()   : imgEl(imgs[s])
-  };
-}
-
+// ── Render ──
 function render(s){
-  const c = spreadContent(s);
-  plFront.innerHTML=''; plFront.appendChild(c.left.cloneNode(true));
-  prFront.innerHTML=''; prFront.appendChild(c.right.cloneNode(true));
-  plBack.innerHTML=''; plBack.appendChild(emptyEl());
-  prBack.innerHTML=''; prBack.appendChild(emptyEl());
+  const c=makeContent(s);
+  plFront.innerHTML=''; plFront.appendChild(c.left);
+  prFront.innerHTML=''; prFront.appendChild(c.right);
+  plBack.innerHTML=''; prBack.innerHTML='';
   updateUI(s);
 }
 
 function updateUI(s){
-  const pg = s===0?1:s>=TOTAL?TOTAL:s;
-  indicator.textContent = `Sayfa ${pg} / ${TOTAL}`;
-  btnPrev.classList.toggle('disabled', s===0);
-  btnNext.classList.toggle('disabled', s>=TOTAL);
-  document.querySelectorAll('.thumb').forEach((t,i)=>{
-    t.classList.toggle('active', i===s-1||(s===0&&i===0));
-  });
-  const activeThumb = document.querySelector('.thumb.active');
-  if(activeThumb) activeThumb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  indicator.textContent=`Sayfa ${s===0?1:s>=TOTAL?TOTAL:s} / ${TOTAL}`;
+  btnPrev.classList.toggle('disabled',s===0);
+  btnNext.classList.toggle('disabled',s>=TOTAL);
+  document.querySelectorAll('.thumb').forEach((t,i)=>t.classList.toggle('active',i===s-1||(s===0&&i===0)));
+  const a=document.querySelector('.thumb.active'); if(a) a.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
 }
 
+// ── Sayfa Çevirme ──
 function turnPage(dir){
   if(animating) return;
-  const newSpread = spread + dir;
-  if(newSpread < 0 || newSpread > TOTAL) return;
-  animating = true;
-  const next = spreadContent(newSpread);
-  if(dir > 0){
-    prBack.innerHTML=''; prBack.appendChild(next.left.cloneNode(true));
-    pageRight.classList.add('flipping-left');
+  const ns=spread+dir;
+  if(ns<0||ns>TOTAL) return;
+  animating=true;
+  playFlip();
+  const next=makeContent(ns);
+  if(dir>0){
+    prBack.innerHTML=''; prBack.appendChild(next.left);
+    pageRight.classList.add('flipping');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ pageRight.style.transform='rotateY(180deg)'; }));
     setTimeout(()=>{
-      spread = newSpread;
-      pageRight.classList.remove('flipping-left');
+      spread=ns;
+      pageRight.style.transition='none'; pageRight.style.transform=''; pageRight.classList.remove('flipping');
       render(spread);
-      animating=false;
-    },700);
+      requestAnimationFrame(()=>{ pageRight.style.transition=''; animating=false; });
+    },780);
   } else {
-    plBack.innerHTML=''; plBack.appendChild(next.right.cloneNode(true));
-    pageLeft.classList.add('flipping-right');
+    plBack.innerHTML=''; plBack.appendChild(next.right);
+    pageLeft.classList.add('flipping');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ pageLeft.style.transform='rotateY(-180deg)'; }));
     setTimeout(()=>{
-      spread = newSpread;
-      pageLeft.classList.remove('flipping-right');
+      spread=ns;
+      pageLeft.style.transition='none'; pageLeft.style.transform=''; pageLeft.classList.remove('flipping');
       render(spread);
-      animating=false;
-    },700);
+      requestAnimationFrame(()=>{ pageLeft.style.transition=''; animating=false; });
+    },780);
   }
 }
 
-const strip = document.getElementById('thumbstrip');
+// ── Thumbnail ──
+const strip=document.getElementById('thumbstrip');
 imgs.forEach((src,i)=>{
-  const t = document.createElement('div');
-  t.className='thumb'+(i===0?' active':'');
-  t.innerHTML=`<img src="${src}" alt="Sayfa ${i+1}"><div class="thumb-num">${i+1}</div>`;
-  t.addEventListener('click',()=>{
-    if(animating) return;
-    const target = i+1;
-    if(target === spread) return;
-    spread = target;
-    render(spread);
-  });
+  const t=document.createElement('div'); t.className='thumb'+(i===0?' active':'');
+  t.innerHTML=`<img src="${src}" alt=""><div class="thumb-num">${i+1}</div>`;
+  t.addEventListener('click',()=>{ if(animating||i+1===spread) return; playFlip(); spread=i+1; render(spread); });
   strip.appendChild(t);
 });
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown') turnPage(1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp') turnPage(-1);
-});
-
-let touchStartX=0;
-document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX - touchStartX;
-  if(Math.abs(dx)>50){ dx<0?turnPage(1):turnPage(-1); }
-},{passive:true});
+// ── Klavye & Dokunma ──
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key==='ArrowDown') turnPage(1); if(e.key==='ArrowLeft'||e.key==='ArrowUp') turnPage(-1); });
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50){dx<0?turnPage(1):turnPage(-1);} },{passive:true});
 
 render(0);
 </script>
