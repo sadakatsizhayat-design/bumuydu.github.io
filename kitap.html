@@ -199,13 +199,20 @@
 
     /* ─── KITAPLE ─────────────────────────── */
     #board {
-      display: grid;
-      grid-template-rows: repeat(6, 1fr);
-      gap: 6px;
-      margin: 0 auto 32px;
+      margin: 0 auto 16px;
       width: 100%;
       max-width: 340px;
     }
+    .attempt-counter {
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+    .attempt-counter span { color: var(--yellow); font-weight: 700; }
     .row {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -687,6 +694,7 @@
     </p>
 
     <div id="kitaple-msg"></div>
+    <div class="attempt-counter">Deneme <span id="attempt-num">1</span> / 6</div>
     <div id="board"></div>
 
     <!-- ⚙️ İPUÇLARINI BURADAN DEĞİŞTİRİN -->
@@ -852,42 +860,41 @@
   }
 
   // ══════════════════════════════════════
-  // KITAPLE ENGINE
+  // KITAPLE ENGINE — TEK SATIR MODU
   // ══════════════════════════════════════
   // ⚙️ HAFTALIK KELİMEYİ BURADAN DEĞİŞTİRİN:
   const TARGET = 'KALEM'; // 5 harfli büyük harf
   const WORD_LENGTH = TARGET.length;
   const MAX_GUESSES = 6;
 
-  let board = [];
   let currentRow = 0;
   let currentTile = 0;
+  let currentLetters = [];
   let gameOver = false;
   let guessResult = [];
 
   function buildBoard() {
     const boardEl = document.getElementById('board');
     boardEl.innerHTML = '';
-    for (let r = 0; r < MAX_GUESSES; r++) {
-      const rowEl = document.createElement('div');
-      rowEl.classList.add('row');
-      rowEl.id = 'row-' + r;
-      board.push([]);
-      for (let c = 0; c < WORD_LENGTH; c++) {
-        const tile = document.createElement('div');
-        tile.classList.add('tile');
-        tile.id = `tile-${r}-${c}`;
-        rowEl.appendChild(tile);
-        board[r].push('');
-      }
-      boardEl.appendChild(rowEl);
+    // Sadece tek satır
+    const rowEl = document.createElement('div');
+    rowEl.classList.add('row');
+    rowEl.id = 'active-row';
+    currentLetters = [];
+    for (let c = 0; c < WORD_LENGTH; c++) {
+      const tile = document.createElement('div');
+      tile.classList.add('tile');
+      tile.id = `tile-${c}`;
+      rowEl.appendChild(tile);
+      currentLetters.push('');
     }
+    boardEl.appendChild(rowEl);
   }
 
   function addLetter(letter) {
     if (gameOver || currentTile >= WORD_LENGTH) return;
-    board[currentRow][currentTile] = letter;
-    const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+    currentLetters[currentTile] = letter;
+    const tile = document.getElementById(`tile-${currentTile}`);
     tile.textContent = letter;
     tile.classList.add('filled');
     currentTile++;
@@ -896,8 +903,8 @@
   function deleteLetter() {
     if (currentTile === 0) return;
     currentTile--;
-    board[currentRow][currentTile] = '';
-    const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+    currentLetters[currentTile] = '';
+    const tile = document.getElementById(`tile-${currentTile}`);
     tile.textContent = '';
     tile.classList.remove('filled');
   }
@@ -911,45 +918,58 @@
   function submitGuess() {
     if (currentTile < WORD_LENGTH) {
       showMsg('Kelime ' + WORD_LENGTH + ' harf olmalı.');
-      document.getElementById('row-' + currentRow).classList.add('shake');
-      setTimeout(() => document.getElementById('row-' + currentRow).classList.remove('shake'), 450);
+      document.getElementById('active-row').classList.add('shake');
+      setTimeout(() => document.getElementById('active-row').classList.remove('shake'), 450);
       return;
     }
 
-    const guess = board[currentRow].join('');
+    const guess = currentLetters.join('');
     const result = evaluateGuess(guess);
     guessResult.push(result.map(r => r.status));
-    revealRow(currentRow, result);
 
     const won = result.every(r => r.status === 'correct');
-    const lost = !won && currentRow === MAX_GUESSES - 1;
+    const isLastGuess = currentRow === MAX_GUESSES - 1;
 
-    // İpucu sistemi
-    if (!won) {
-      if (currentRow === 2) document.getElementById('hint1').classList.add('visible');
-      if (currentRow === 4) document.getElementById('hint2').classList.add('visible');
-    }
-
-    setTimeout(() => {
+    // Renkleri göster
+    revealRow(result, () => {
       if (won) {
         showMsg('🎉 Doğru!', 0);
         endGame(true);
-      } else if (lost) {
+        return;
+      }
+      if (isLastGuess) {
         showMsg('Kelime: ' + TARGET, 0);
         endGame(false);
+        return;
       }
-    }, WORD_LENGTH * 350 + 200);
 
-    currentRow++;
-    currentTile = 0;
+      // İpucu sistemi
+      if (currentRow === 2) document.getElementById('hint1').classList.add('visible');
+      if (currentRow === 4) document.getElementById('hint2').classList.add('visible');
+
+      // Kısa bekleme sonra satırı temizle
+      setTimeout(() => {
+        currentRow++;
+        currentTile = 0;
+        document.getElementById('attempt-num').textContent = currentRow + 1;
+        clearRow();
+      }, 600);
+    });
+  }
+
+  function clearRow() {
+    for (let c = 0; c < WORD_LENGTH; c++) {
+      const tile = document.getElementById(`tile-${c}`);
+      tile.textContent = '';
+      tile.className = 'tile';
+      currentLetters[c] = '';
+    }
   }
 
   function evaluateGuess(guess) {
     const result = Array(WORD_LENGTH).fill(null).map((_, i) => ({ letter: guess[i], status: 'absent' }));
     const targetArr = TARGET.split('');
     const guessArr = guess.split('');
-
-    // First pass: correct positions
     for (let i = 0; i < WORD_LENGTH; i++) {
       if (guessArr[i] === targetArr[i]) {
         result[i].status = 'correct';
@@ -957,7 +977,6 @@
         guessArr[i] = null;
       }
     }
-    // Second pass: present
     for (let i = 0; i < WORD_LENGTH; i++) {
       if (guessArr[i] === null) continue;
       const idx = targetArr.indexOf(guessArr[i]);
@@ -969,13 +988,16 @@
     return result;
   }
 
-  function revealRow(row, result) {
+  function revealRow(result, onDone) {
     result.forEach((r, i) => {
       setTimeout(() => {
-        const tile = document.getElementById(`tile-${row}-${i}`);
+        const tile = document.getElementById(`tile-${i}`);
         tile.classList.add('flip', r.status);
         updateKey(r.letter, r.status);
-      }, i * 350);
+        if (i === WORD_LENGTH - 1) {
+          setTimeout(onDone, 400);
+        }
+      }, i * 300);
     });
   }
 
