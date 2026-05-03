@@ -25,9 +25,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -37,577 +35,139 @@
       overflow-x: hidden;
     }
 
-    /* ─── NAV ─────────────────────────────── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(10,10,10,0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 16px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--text); text-decoration: none; letter-spacing: 0.03em; }
     .nav-logo span { color: var(--yellow); }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 32px;
-    }
-    nav a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
     nav a:hover { color: var(--yellow); }
 
-    /* ─── HERO ────────────────────────────── */
-    .hero {
-      padding: 80px 48px 60px;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -120px;
-      right: -80px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(245,230,66,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .week-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--yellow);
-      border: 1px solid var(--yellow);
-      padding: 4px 12px;
-      margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      font-weight: 900;
-      line-height: 1.1;
-      max-width: 700px;
-      margin-bottom: 16px;
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--yellow);
-    }
-    .hero-meta {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.05em;
-    }
-    .hero-meta span {
-      color: var(--red);
-      margin: 0 8px;
-    }
+    .hero { padding: 80px 48px 60px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -120px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(245,230,66,0.06) 0%, transparent 70%); pointer-events: none; }
+    .week-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); border: 1px solid var(--yellow); padding: 4px 12px; margin-bottom: 24px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; max-width: 700px; margin-bottom: 16px; }
+    .hero h1 em { font-style: italic; color: var(--yellow); }
+    .hero-meta { font-size: 0.95rem; color: var(--text-dim); font-family: 'Space Mono', monospace; letter-spacing: 0.05em; }
+    .hero-meta span { color: var(--red); margin: 0 8px; }
 
-    /* ─── GAME NAV ────────────────────────── */
-    .game-nav {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-      position: sticky;
-      top: 57px;
-      z-index: 90;
-    }
-    .game-tab {
-      flex: 1;
-      padding: 18px 24px;
-      text-align: center;
-      cursor: pointer;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      border: none;
-      background: transparent;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-    }
+    .game-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 57px; z-index: 90; }
+    .game-tab { flex: 1; padding: 18px 24px; text-align: center; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); border: none; background: transparent; border-bottom: 2px solid transparent; transition: all 0.2s; }
     .game-tab:hover { color: var(--text); }
-    .game-tab.active {
-      color: var(--yellow);
-      border-bottom-color: var(--yellow);
-    }
-    .game-tab .tab-num {
-      display: block;
-      font-size: 1.2rem;
-      margin-bottom: 4px;
-      font-weight: 700;
-    }
+    .game-tab.active { color: var(--yellow); border-bottom-color: var(--yellow); }
+    .game-tab .tab-num { display: block; font-size: 1.2rem; margin-bottom: 4px; font-weight: 700; }
 
-    /* ─── GAME SECTIONS ───────────────────── */
-    .game-section {
-      display: none;
-      min-height: 80vh;
-    }
+    .game-section { display: none; min-height: 80vh; }
     .game-section.active { display: block; }
+    .section-inner { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
 
-    .section-inner {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 60px 24px 80px;
-    }
+    .game-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .game-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
+    .game-desc { color: var(--text-dim); font-size: 1rem; margin-bottom: 48px; max-width: 480px; }
 
-    .game-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 12px;
-    }
-    .game-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-    .game-desc {
-      color: var(--text-dim);
-      font-size: 1rem;
-      margin-bottom: 48px;
-      max-width: 480px;
-    }
-
-    /* ─── KITAPLE ─────────────────────────── */
-    #board {
-      margin: 0 auto 16px;
-      width: 100%;
-      max-width: 340px;
-    }
-    .attempt-counter {
-      text-align: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 12px;
-    }
+    #board { margin: 0 auto 16px; width: 100%; max-width: 340px; }
+    .attempt-counter { text-align: center; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
     .attempt-counter span { color: var(--yellow); font-weight: 700; }
-    .row {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-    }
-    .tile {
-      aspect-ratio: 1;
-      border: 2px solid #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: var(--text);
-      background: var(--bg2);
-      transition: border-color 0.1s, background 0.3s, transform 0.1s;
-      position: relative;
-    }
+    .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .tile { aspect-ratio: 1; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; text-transform: uppercase; color: var(--text); background: var(--bg2); transition: border-color 0.1s, background 0.3s, transform 0.1s; position: relative; }
     .tile.filled { border-color: #555; transform: scale(1.03); }
     .tile.correct { background: var(--green); border-color: var(--green); color: #fff; }
     .tile.present { background: #7d6608; border-color: #7d6608; color: #fff; }
     .tile.absent { background: #2a2a2a; border-color: #2a2a2a; color: #666; }
     .tile.flip { animation: flip 0.5s ease forwards; }
 
-    @keyframes flip {
-      0% { transform: rotateX(0); }
-      50% { transform: rotateX(-90deg); }
-      100% { transform: rotateX(0); }
-    }
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      20%,60% { transform: translateX(-6px); }
-      40%,80% { transform: translateX(6px); }
-    }
+    @keyframes flip { 0% { transform: rotateX(0); } 50% { transform: rotateX(-90deg); } 100% { transform: rotateX(0); } }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
     .row.shake { animation: shake 0.4s ease; }
 
-    /* keyboard */
-    #keyboard {
-      max-width: 380px;
-      margin: 0 auto;
-    }
-    .kb-row {
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
-    .key {
-      height: 48px;
-      min-width: 36px;
-      padding: 0 6px;
-      border-radius: 4px;
-      background: #2a2a2a;
-      border: 1px solid #3a3a3a;
-      color: var(--text);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      text-transform: uppercase;
-    }
+    #keyboard { max-width: 380px; margin: 0 auto; }
+    .kb-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 5px; }
+    .key { height: 48px; min-width: 36px; padding: 0 6px; border-radius: 4px; background: #2a2a2a; border: 1px solid #3a3a3a; color: var(--text); font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; cursor: pointer; transition: background 0.15s, transform 0.1s; text-transform: uppercase; }
     .key:hover { background: #3a3a3a; transform: translateY(-1px); }
     .key.wide { min-width: 56px; font-size: 0.6rem; }
     .key.correct { background: var(--green); border-color: var(--green); }
     .key.present { background: #7d6608; border-color: #7d6608; }
     .key.absent { background: #1a1a1a; border-color: #1a1a1a; color: #444; }
 
-    #kitaple-msg {
-      text-align: center;
-      min-height: 28px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: var(--yellow);
-      margin-bottom: 16px;
-    }
-    /* ─── İPUCU KUTULARI ─────────────────── */
-    .hint-box {
-      display: none;
-      border: 1px solid var(--border-red);
-      background: var(--red-dim);
-      padding: 16px 20px;
-      margin-bottom: 12px;
-      animation: fadeIn 0.5s ease;
-    }
+    #kitaple-msg { text-align: center; min-height: 28px; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--yellow); margin-bottom: 16px; }
+
+    .hint-box { display: none; border: 1px solid var(--border-red); background: var(--red-dim); padding: 16px 20px; margin-bottom: 12px; animation: fadeInUp 0.5s ease; }
     .hint-box.visible { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hint-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 6px;
-    }
-    .hint-text {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-    }
-    .hint-text a {
-      color: var(--yellow);
-      text-decoration: underline;
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .hint-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+    .hint-text { font-size: 0.95rem; color: var(--text-dim); }
+    .hint-text a { color: var(--yellow); text-decoration: underline; }
     .hint-text strong { color: var(--text); }
 
-    #kitaple-result {
-      display: none;
-      text-align: center;
-      padding: 24px;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-      margin-top: 24px;
-    }
-    #kitaple-result h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-    }
+    #kitaple-result { display: none; text-align: center; padding: 24px; border: 1px solid var(--border); background: var(--bg2); margin-top: 24px; }
+    #kitaple-result h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 8px; }
     #kitaple-result p { color: var(--text-dim); font-size: 0.9rem; }
-    #kitaple-result .share-btn {
-      margin-top: 16px;
-      padding: 10px 24px;
-      background: var(--yellow);
-      color: var(--bg);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      border: none;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
+    #kitaple-result .share-btn { margin-top: 16px; padding: 10px 24px; background: var(--yellow); color: var(--bg); font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; border: none; cursor: pointer; text-transform: uppercase; }
     #kitaple-result .share-btn:hover { opacity: 0.85; }
 
-    /* ─── İLK CÜMLE ───────────────────────── */
-    .sentence-card {
-      border: 1px solid #2a2a2a;
-      padding: 28px 32px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      background: var(--bg2);
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .sentence-card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: var(--yellow);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.2s;
-    }
+    .sentence-card { border: 1px solid #2a2a2a; padding: 28px 32px; margin-bottom: 12px; cursor: pointer; background: var(--bg2); transition: all 0.2s; position: relative; overflow: hidden; }
+    .sentence-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--yellow); transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s; }
     .sentence-card:hover { border-color: #3a3a3a; background: var(--bg3); }
     .sentence-card:hover::before { transform: scaleY(1); }
     .sentence-card.selected { border-color: var(--yellow); }
     .sentence-card.selected::before { transform: scaleY(1); }
-    .sentence-card.correct-answer {
-      border-color: var(--green);
-      background: var(--green-dim);
-    }
+    .sentence-card.correct-answer { border-color: var(--green); background: var(--green-dim); }
     .sentence-card.correct-answer::before { background: var(--green); transform: scaleY(1); }
     .sentence-card.wrong-answer { border-color: var(--red); opacity: 0.5; }
-    .sentence-card .opt-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .sentence-card .sentence-text {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      font-style: italic;
-    }
-    .sentence-card .result-badge {
-      display: none;
-      margin-top: 12px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    .sentence-card .opt-num { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+    .sentence-card .sentence-text { font-size: 1.1rem; line-height: 1.6; font-style: italic; }
+    .sentence-card .result-badge { display: none; margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
     .sentence-card.correct-answer .result-badge { display: block; color: #4caf50; }
     .sentence-card.wrong-answer .result-badge { display: block; color: var(--red); }
-    .sentence-result-note {
-      display: none;
-      padding: 20px 24px;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-      margin-top: 16px;
-      font-size: 0.95rem;
-    }
+    .sentence-result-note { display: none; padding: 20px 24px; border: 1px solid var(--border); background: var(--bg2); margin-top: 16px; font-size: 0.95rem; }
     .sentence-result-note.visible { display: block; }
     .sentence-result-note strong { color: var(--yellow); }
 
-    /* ─── HABER × KİTAP ──────────────────── */
-    .news-card {
-      border: 1px solid var(--border-red);
-      padding: 28px 32px;
-      margin-bottom: 32px;
-      background: var(--bg2);
-      position: relative;
-    }
-    .news-source {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 10px;
-    }
-    .news-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 10px;
-    }
-    .news-snippet {
-      color: var(--text-dim);
-      font-size: 0.95rem;
-    }
-    .books-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
+    .news-card { border: 1px solid var(--border-red); padding: 28px 32px; margin-bottom: 32px; background: var(--bg2); position: relative; }
+    .news-source { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+    .news-headline { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+    .news-snippet { color: var(--text-dim); font-size: 0.95rem; }
+    .books-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
     @media (max-width: 520px) { .books-grid { grid-template-columns: 1fr; } }
-    .book-option {
-      padding: 18px 20px;
-      border: 1px solid #2a2a2a;
-      background: var(--bg2);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: left;
-    }
+    .book-option { padding: 18px 20px; border: 1px solid #2a2a2a; background: var(--bg2); cursor: pointer; transition: all 0.2s; text-align: left; }
     .book-option:hover { border-color: #3a3a3a; background: var(--bg3); }
     .book-option.selected { border-color: var(--yellow); }
     .book-option.correct-book { border-color: var(--green); background: var(--green-dim); }
     .book-option.wrong-book { border-color: var(--red); opacity: 0.4; }
-    .book-option .book-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .book-option .book-author {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-    .news-result {
-      display: none;
-      padding: 20px 24px;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-      margin-top: 16px;
-    }
+    .book-option .book-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .book-option .book-author { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    .news-result { display: none; padding: 20px 24px; border: 1px solid var(--border); background: var(--bg2); margin-top: 16px; }
     .news-result.visible { display: block; }
     .news-result p { font-size: 0.97rem; }
     .news-result strong { color: var(--yellow); }
 
-    /* ─── CTA BTN ─────────────────────────── */
-    .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
+    .btn { display: inline-block; padding: 12px 28px; font-family: 'Space Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border: none; transition: all 0.2s; }
     .btn-yellow { background: var(--yellow); color: var(--bg); }
     .btn-yellow:hover { opacity: 0.85; }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-dim);
-      border: 1px solid #333;
-    }
+    .btn-outline { background: transparent; color: var(--text-dim); border: 1px solid #333; }
     .btn-outline:hover { border-color: var(--text-dim); color: var(--text); }
 
-    /* ─── WEEK BOOK CARD ──────────────────── */
-    .book-strip {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 48px;
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .book-cover-mock {
-      flex-shrink: 0;
-      width: 80px;
-      height: 110px;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      overflow: hidden;
-    }
-    .book-cover-mock img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .book-strip-text h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-style: italic;
-      margin-bottom: 4px;
-    }
-    .book-strip-text p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
+    .book-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; gap: 40px; }
+    .book-cover-mock { flex-shrink: 0; width: 80px; height: 110px; background: #1a1a1a; border: 1px solid #333; overflow: hidden; }
+    .book-cover-mock img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .book-strip-text h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; margin-bottom: 4px; }
+    .book-strip-text p { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
 
-    /* ─── FOOTER AREA ─────────────────────── */
-    .page-footer {
-      padding: 40px 48px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
+    .page-footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
 
-    /* ─── SCORE BAR ───────────────────────── */
-    .score-bar {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 48px 0;
-      margin-top: -1px;
-      border-bottom: 1px solid var(--border);
-      height: 42px;
-      background: var(--bg);
-    }
-    .score-item {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      color: var(--text-dim);
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .score-num {
-      color: var(--yellow);
-      font-weight: 700;
-    }
+    .score-bar { display: flex; gap: 12px; align-items: center; justify-content: flex-end; padding: 0 48px 0; margin-top: -1px; border-bottom: 1px solid var(--border); height: 42px; background: var(--bg); }
+    .score-item { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-dim); display: flex; gap: 6px; align-items: center; }
+    .score-num { color: var(--yellow); font-weight: 700; }
 
-    /* ─── DECORATIVE ──────────────────────── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 48px 0;
-      color: var(--text-dim);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #222;
-    }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 48px 0; color: var(--text-dim); font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #222; }
 
-    /* ─── SCROLLBAR ───────────────────────── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: #333; }
@@ -620,6 +180,213 @@
       .page-footer { padding: 28px 20px; flex-direction: column; gap: 10px; text-align: center; }
       .score-bar { padding: 0 20px; }
     }
+
+    /* ══════════════════════════════════════
+       SURPRISE OVERLAY
+    ══════════════════════════════════════ */
+    #surprise-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    #surprise-overlay.visible {
+      display: flex;
+      animation: overlayFadeIn 0.5s ease;
+    }
+    @keyframes overlayFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .surprise-card {
+      background: #0f0f0f;
+      border: 1px solid rgba(245,230,66,0.3);
+      border-radius: 2px;
+      padding: 2.5rem 2rem;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .surprise-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.7rem;
+      line-height: 1.2;
+    }
+    .card-body {
+      font-size: 0.95rem;
+      color: #999;
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+    }
+    .card-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text);
+      border-left: 2px solid var(--yellow);
+      padding-left: 1rem;
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    .card-action {
+      background: var(--yellow);
+      color: #000;
+      border: none;
+      padding: 0.65rem 1.6rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .card-action:hover { opacity: 0.85; }
+    .card-action-outline {
+      background: transparent;
+      color: var(--yellow);
+      border: 1px solid rgba(245,230,66,0.35);
+      padding: 0.65rem 1.6rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 0.5rem;
+    }
+    .card-action-outline:hover { border-color: var(--yellow); color: #fff; }
+
+    /* Rozet kartı */
+    .badge-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.2rem;
+    }
+    .badge-title-display {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--yellow);
+      margin-bottom: 0.3rem;
+    }
+
+    /* İsim input */
+    .name-input-area {
+      margin-bottom: 1.4rem;
+    }
+    .name-input-area label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+    .name-input-area input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      padding: 0.6rem 0.8rem;
+      outline: none;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .name-input-area input:focus {
+      border-color: var(--yellow);
+    }
+    .name-input-area input::placeholder {
+      color: #444;
+      font-style: italic;
+    }
+
+    .personalized-badge {
+      display: none;
+      margin-top: 1rem;
+    }
+    .personalized-badge.show {
+      display: block;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    /* Teaser kartı */
+    .tease-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 1rem 0 1.5rem;
+      line-height: 1.6;
+    }
+    .tease-ornament {
+      color: var(--yellow);
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1.2rem;
+    }
+
+    #surprise-close {
+      color: #444;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      padding: 0.4rem;
+    }
+    #surprise-close:hover { color: #777; }
+
+    /* Progress dots */
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #333;
+      transition: background 0.3s;
+    }
+    .dot.active { background: var(--yellow); }
   </style>
 </head>
 <body>
@@ -697,7 +464,6 @@
     <div class="attempt-counter">Deneme <span id="attempt-num">1</span> / 6</div>
     <div id="board"></div>
 
-    <!-- ⚙️ İPUÇLARINI BURADAN DEĞİŞTİRİN -->
     <div id="hint-area" style="max-width:340px;margin:0 auto 8px;">
       <div class="hint-box" id="hint1">
         <div class="hint-label">İpucu 1 · 3. tahminden sonra</div>
@@ -763,7 +529,7 @@
 </section>
 
 <!-- ══════════════════════════════════════ -->
-<!-- OYUN 2: İLK CÜMLE Mİ, SAHTE Mİ?      -->
+<!-- OYUN 2: İLK CÜMLE                     -->
 <!-- ══════════════════════════════════════ -->
 <section class="game-section" id="ilkcumle">
   <div class="section-inner">
@@ -847,6 +613,87 @@
   <span>Her Pazar yeni oyunlar ✦</span>
 </footer>
 
+<!-- ══════════════════════════════════════
+     SURPRISE OVERLAY — 3 KART
+══════════════════════════════════════ -->
+<div id="surprise-overlay">
+
+  <!-- KART 1: EDİTÖRDEN GİZLİ NOT -->
+  <div class="surprise-card" id="card-1">
+    <div class="progress-dots">
+      <div class="dot active" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+      <div class="dot" id="dot-3"></div>
+    </div>
+    <div class="card-label">✦ Editörden Gizli Not</div>
+    <div class="card-quote">
+      "Basamakları ağır ağır çıkma başladı."
+    </div>
+    <div class="card-body">
+      Türkali bu cümleyi 1974'te yazdı. Ama o yorgunluk hâlâ tanıdık geliyor.<br>
+      Üç oyunu da tamamladın — bu haftanın kitabını gerçekten hissettin.
+    </div>
+    <button class="card-action" onclick="showCard(2)">Devam →</button>
+  </div>
+
+  <!-- KART 2: KİŞİSEL ROZET -->
+  <div class="surprise-card" id="card-2" style="display:none">
+    <div class="progress-dots">
+      <div class="dot" id="dot-2a"></div>
+      <div class="dot active" id="dot-2b"></div>
+      <div class="dot" id="dot-2c"></div>
+    </div>
+    <div class="card-label">Hafta #1 · Unvan Kazanıldı</div>
+    <div class="badge-circle">📖</div>
+
+    <div class="name-input-area" id="name-input-area">
+      <label>Adın ne? Rozetini kişiselleştir.</label>
+      <input type="text" id="reader-name" placeholder="İsmin..." maxlength="30" oninput="previewBadge()" />
+    </div>
+
+    <div id="badge-default">
+      <div class="badge-title-display">Labyrent Okuyucusu</div>
+      <div class="card-body" style="margin-bottom:1rem">
+        Kelimeyi buldun. İlk cümleyi tanıdın. Kitabı habere bağladın.<br>
+        Bu haftaki okuma unvanın bu.
+      </div>
+    </div>
+
+    <div class="personalized-badge" id="badge-personalized">
+      <div class="badge-title-display" id="badge-name-display">—</div>
+      <div class="card-body" style="margin-bottom:1rem;color:var(--yellow);font-size:0.85rem;">
+        Labyrent Okuyucusu
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap">
+      <button class="card-action" onclick="shareBadge()">Unvanı Paylaş ↗</button>
+      <button class="card-action-outline" onclick="showCard(3)">Sıradaki →</button>
+    </div>
+  </div>
+
+  <!-- KART 3: GELECEKTEKİ KİTAP TEASERİ -->
+  <div class="surprise-card" id="card-3" style="display:none">
+    <div class="progress-dots">
+      <div class="dot" id="dot-3a"></div>
+      <div class="dot" id="dot-3b"></div>
+      <div class="dot active" id="dot-3c"></div>
+    </div>
+    <div class="card-label">Gelecek Pazar</div>
+    <div class="card-title">Bir sonraki kitap<br>geliyor...</div>
+    <div class="tease-ornament">— ✦ —</div>
+    <div class="tease-quote">
+      "Bazı odalar hiç boşalmaz.<br>Sadece farklı insanlarla dolar."
+    </div>
+    <div class="card-body" style="font-size:0.85rem;margin-bottom:1.5rem">
+      Pazar bültenine abone ol, ilk öğrenen sen ol.
+    </div>
+    <a href="https://uansalyangoz.substack.com" target="_blank" class="card-action" style="display:inline-block;text-decoration:none">Bültene Abone Ol</a>
+  </div>
+
+  <button id="surprise-close" onclick="closeSurprise()">kapat</button>
+</div>
+
 <!-- ══════════════════════════════════════ -->
 <!-- SCRIPTS                               -->
 <!-- ══════════════════════════════════════ -->
@@ -860,10 +707,9 @@
   }
 
   // ══════════════════════════════════════
-  // KITAPLE ENGINE — TEK SATIR MODU
+  // KITAPLE ENGINE
   // ══════════════════════════════════════
-  // ⚙️ HAFTALIK KELİMEYİ BURADAN DEĞİŞTİRİN:
-  const TARGET = 'KALEM'; // 5 harfli büyük harf
+  const TARGET = 'KALEM';
   const WORD_LENGTH = TARGET.length;
   const MAX_GUESSES = 6;
 
@@ -876,7 +722,6 @@
   function buildBoard() {
     const boardEl = document.getElementById('board');
     boardEl.innerHTML = '';
-    // Sadece tek satır
     const rowEl = document.createElement('div');
     rowEl.classList.add('row');
     rowEl.id = 'active-row';
@@ -930,7 +775,6 @@
     const won = result.every(r => r.status === 'correct');
     const isLastGuess = currentRow === MAX_GUESSES - 1;
 
-    // Renkleri göster
     revealRow(result, () => {
       if (won) {
         showMsg('🎉 Doğru!', 0);
@@ -943,11 +787,9 @@
         return;
       }
 
-      // İpucu sistemi
       if (currentRow === 2) document.getElementById('hint1').classList.add('visible');
       if (currentRow === 4) document.getElementById('hint2').classList.add('visible');
 
-      // Kısa bekleme sonra satırı temizle
       setTimeout(() => {
         currentRow++;
         currentTile = 0;
@@ -1024,7 +866,7 @@
     resultEl.style.display = 'block';
 
     if (won) {
-      titleEl.textContent = currentRow + '. denemede buldun! 🎉';
+      titleEl.textContent = (currentRow + 1) + '. denemede buldun! 🎉';
       textEl.textContent = '"' + TARGET + '" — Bir Gün Tek Başına\'dan alınan bu haftalık Kitaple kelimesiydi.';
       document.getElementById('score-kitaple').textContent = '✓';
     } else {
@@ -1032,6 +874,9 @@
       textEl.textContent = 'Bu haftanın kelimesi: ' + TARGET;
       document.getElementById('score-kitaple').textContent = '✗';
     }
+
+    game1done = true;
+    checkAllGames();
   }
 
   function shareKitaple() {
@@ -1041,7 +886,6 @@
     navigator.clipboard.writeText(text).then(() => alert('Panoya kopyalandı! Paylaşabilirsin.'));
   }
 
-  // Keyboard events
   document.addEventListener('keydown', e => {
     if (document.getElementById('kitaple').classList.contains('active')) {
       if (e.key === 'Enter') submitGuess();
@@ -1073,21 +917,16 @@
 
     document.querySelectorAll('.sentence-card').forEach(card => {
       const correct = card.dataset.correct === 'true';
-      if (correct) {
-        card.classList.add('correct-answer');
-      } else {
-        card.classList.add('wrong-answer');
-      }
+      if (correct) card.classList.add('correct-answer');
+      else card.classList.add('wrong-answer');
       card.onclick = null;
     });
 
     document.getElementById('sentence-result-note').classList.add('visible');
+    document.getElementById('score-ilk').textContent = isCorrect ? '✓' : '✗';
 
-    if (isCorrect) {
-      document.getElementById('score-ilk').textContent = '✓';
-    } else {
-      document.getElementById('score-ilk').textContent = '✗';
-    }
+    game2done = true;
+    checkAllGames();
   }
 
   // ══════════════════════════════════════
@@ -1101,20 +940,81 @@
 
     document.querySelectorAll('.book-option').forEach(opt => {
       opt.onclick = null;
-      if (opt.classList.contains('correct-answer-data')) {
-        opt.classList.add('correct-book');
-      } else {
-        opt.classList.add('wrong-book');
-      }
+      if (opt.classList.contains('correct-answer-data')) opt.classList.add('correct-book');
+      else opt.classList.add('wrong-book');
     });
 
     document.getElementById('news-result').classList.add('visible');
+    document.getElementById('score-haber').textContent = isCorrect ? '✓' : '✗';
 
-    if (isCorrect) {
-      document.getElementById('score-haber').textContent = '✓';
-    } else {
-      document.getElementById('score-haber').textContent = '✗';
+    game3done = true;
+    checkAllGames();
+  }
+
+  // ══════════════════════════════════════
+  // SURPRISE SYSTEM
+  // ══════════════════════════════════════
+  let game1done = false;
+  let game2done = false;
+  let game3done = false;
+
+  function checkAllGames() {
+    if (game1done && game2done && game3done) {
+      setTimeout(() => {
+        const overlay = document.getElementById('surprise-overlay');
+        overlay.classList.add('visible');
+        setTimeout(() => document.getElementById('card-1').classList.add('show'), 120);
+      }, 900);
     }
+  }
+
+  function showCard(n) {
+    ['card-1','card-2','card-3'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = 'none';
+      el.classList.remove('show');
+    });
+    const card = document.getElementById('card-' + n);
+    card.style.display = 'block';
+    setTimeout(() => card.classList.add('show'), 50);
+  }
+
+  // İsim girince rozeti güncelle
+  function previewBadge() {
+    const name = document.getElementById('reader-name').value.trim();
+    const personalized = document.getElementById('badge-personalized');
+    const defaultBadge = document.getElementById('badge-default');
+    const nameArea = document.getElementById('name-input-area');
+
+    if (name.length > 0) {
+      document.getElementById('badge-name-display').textContent = name;
+      personalized.classList.add('show');
+      defaultBadge.style.display = 'none';
+      // Input alanını gizle
+      nameArea.style.opacity = '0';
+      nameArea.style.height = '0';
+      nameArea.style.overflow = 'hidden';
+      nameArea.style.marginBottom = '0';
+      nameArea.style.transition = 'opacity 0.3s ease, height 0.4s ease, margin 0.4s ease';
+    } else {
+      personalized.classList.remove('show');
+      defaultBadge.style.display = 'block';
+      nameArea.style.opacity = '1';
+      nameArea.style.height = '';
+      nameArea.style.overflow = '';
+      nameArea.style.marginBottom = '';
+    }
+  }
+
+  function shareBadge() {
+    const name = document.getElementById('reader-name').value.trim();
+    const nameStr = name ? name + ' — ' : '';
+    const text = `📖 ${nameStr}Bu Muydu? Hafta #1 tamamlandı!\n\nLabyrent Okuyucusu unvanı kazanıldı.\n\nVedat Türkali · Bir Gün Tek Başına\n\nbumuydu.github.io/kitap.html`;
+    navigator.clipboard.writeText(text).then(() => alert('Panoya kopyalandı! Paylaşabilirsin.'));
+  }
+
+  function closeSurprise() {
+    document.getElementById('surprise-overlay').classList.remove('visible');
   }
 </script>
 
