@@ -883,7 +883,12 @@
     const emojis = { correct: '🟩', present: '🟨', absent: '⬛' };
     const lines = guessResult.map(row => row.map(s => emojis[s]).join('')).join('\n');
     const text = `Bu Muydu? Kitaple — Hafta #1\n${guessResult.length}/${MAX_GUESSES}\n\n${lines}\n\nbumuydu.github.io/kitap.html`;
-    navigator.clipboard.writeText(text).then(() => alert('Panoya kopyalandı! Paylaşabilirsin.'));
+    if (navigator.share) { navigator.share({ text }).catch(() => {}); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => alert('Panoya kopyalandı!')).catch(() => fallbackCopy(text));
+      return;
+    }
+    fallbackCopy(text);
   }
 
   document.addEventListener('keydown', e => {
@@ -1010,7 +1015,35 @@
     const name = document.getElementById('reader-name').value.trim();
     const nameStr = name ? name + ' — ' : '';
     const text = `📖 ${nameStr}Bu Muydu? Hafta #1 tamamlandı!\n\nLabyrent Okuyucusu unvanı kazanıldı.\n\nVedat Türkali · Bir Gün Tek Başına\n\nbumuydu.github.io/kitap.html`;
-    navigator.clipboard.writeText(text).then(() => alert('Panoya kopyalandı! Paylaşabilirsin.'));
+
+    // 1. Native paylaşım (mobil)
+    if (navigator.share) {
+      navigator.share({ text }).catch(() => {});
+      return;
+    }
+
+    // 2. Clipboard
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => alert('Panoya kopyalandı!'))
+        .catch(() => fallbackCopy(text));
+      return;
+    }
+
+    // 3. Fallback
+    fallbackCopy(text);
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;padding:1rem;background:#111;color:#fff;border:1px solid #f5e642;font-size:0.85rem;z-index:99999;border-radius:4px;';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); alert('Panoya kopyalandı!'); }
+    catch { /* kullanıcı kendisi kopyalayabilir */ }
+    setTimeout(() => ta.remove(), 4000);
   }
 
   function closeSurprise() {
